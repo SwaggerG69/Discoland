@@ -6,7 +6,7 @@ fontLink.rel = "stylesheet";
 fontLink.href = "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syncopate:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap";
 document.head.appendChild(fontLink);
 
-// ── Global styles ──────────────────────────────────────────────────────────
+// ── Global styles ───────────────────────────────────────────────────────────
 const globalStyle = document.createElement("style");
 globalStyle.textContent = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,7 +37,7 @@ globalStyle.textContent = `
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
     opacity: 0.35;
   }
 
@@ -625,6 +625,31 @@ globalStyle.textContent = `
   .about-bio { font-size: 16px; line-height: 1.9; color: rgba(240,238,248,0.75); }
   .about-bio p { margin-bottom: 20px; }
   .about-bio strong { color: var(--cyan); font-weight: 600; }
+  .about-highlight-box {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 20px;
+  }
+  .about-highlight-box ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+  }
+  .about-highlight-box li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .about-highlight-box li:last-child {
+    border-bottom: none;
+  }
+  .about-highlight-box li strong {
+    color: var(--pink);
+    font-weight: 600;
+  }
   .members-grid {
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 16px;
@@ -779,7 +804,7 @@ globalStyle.textContent = `
 `;
 document.head.appendChild(globalStyle);
 
-// ── Data ─────────────────────────────────────────────────────────────────────
+// ── Data ────────────────────────────────────────────────────────────
 const TRACKS = [
   { id: 1, name: "Neon Fever Dream", album: "Mirror Ball (2024)", duration: "3:47", emoji: "🌙" },
   { id: 2, name: "Ultraviolet Love", album: "Mirror Ball (2024)", duration: "4:12", emoji: "💜" },
@@ -815,19 +840,12 @@ const GALLERY_ITEMS = [
 ];
 
 const REVIEWS = [
-  { text: "DISCOLAND brought incredible energy to our corporate year-end event, delivering amazing music and outstanding performance. The crowd absolutely loved them, dancing the night away to their fantastic setlist. Their song selection and sound quality were top-notch, making the evening truly unforgettable. We'd love to see them on our stage again in the future!", author: "Kevin van der Berg", source: "3voor12 / NPO Radio", badge: "Press" },
-  { text: "What an incredibly good band!!! Not normally good party and super nice people. If you guys don't choose this band you are crazy!!!", author: "Saskia & Menko", source: "Resident Advisor", badge: "Press" },
-  { text: "What a fantastic performance you guys put on! You really made our day even more unforgettable. We have received many compliments, everyone is really lyrical about your performance!", author: "Jan & Dore", source: "Instagram", badge: "Fan" },
+  { text: "DISCOLAND brought incredible energy to our corporate year-end event, delivering amazing music and outstanding performance. The crowd absolutely loved them, dancing the night away to the best disco beats.", author: "Corporate Events Team", source: "Direct Booking", badge: "Verified" },
+  { text: "What an incredibly good band!!! Not normally good party and super nice people. If you guys don't choose this band you are crazy!!!", author: "Saskia & Menko", source: "Resident Advisor" },
+  { text: "What a fantastic performance you guys put on! You really made our day even more unforgettable. We have received many compliments, everyone is really lyrical about your performance!", author: "Wedding Clients", source: "Direct Feedback", badge: "5 Stars" },
 ];
 
-const MEMBERS = [
-  { name: "Nova Stryx", role: "Vocals / Synth", emoji: "🎤" },
-  { name: "Felix Marz", role: "Guitar / Production", emoji: "🎸" },
-  { name: "Lena Voss", role: "Bass / Keys", emoji: "🎹" },
-  { name: "Rico Drum", role: "Drums / Percussion", emoji: "🥁" },
-];
-
-// ── Hooks ─────────────────────────────────────────────────────────────────────
+// ── Hooks ───────────────────────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
@@ -840,7 +858,7 @@ function useScrollReveal() {
   });
 }
 
-// ── App ───────────────────────────────────────────────────────────────────────
+// ── App ──────────────────────────────────────────────────────────────
 export default function DiscolandWebsite() {
   const [navScrolled, setNavScrolled] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -933,7 +951,7 @@ export default function DiscolandWebsite() {
         <div className="ticker-inner">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="ticker-text">
-              DISCOLAND <span className="ticker-dot">✦</span> MIRROR BALL TOUR 2025 <span className="ticker-dot">✦</span> NEON FEVER DREAM <span className="ticker-dot">✦</span> OUT NOW <span className="ticker-dot">✦</span>
+              BANGERS ALL THE TIME <span className="ticker-dot">✦</span> LIVE DISCO POWER <span className="ticker-dot">✦</span> DANCE FLOOR EXPLOSION <span className="ticker-dot">✦</span> BOOK US NOW
             </span>
           ))}
         </div>
@@ -1013,7 +1031,7 @@ export default function DiscolandWebsite() {
             <div className="spotify-icon">🎧</div>
             <div className="spotify-text">
               <h4>Listen on Spotify</h4>
-              <p>Follow Discoland and stream Mirror Ball, our full discography, and curated playlists</p>
+              <p>Follow Discoland and stream our full discography and curated playlists</p>
             </div>
             <a href="#" className="neon-btn neon-btn-primary" style={{ marginLeft: "auto", flexShrink: 0 }}>Follow</a>
           </div>
@@ -1138,7 +1156,7 @@ export default function DiscolandWebsite() {
                 <p className="review-text">{r.text}</p>
                 <div className="review-author">{r.author}</div>
                 <div className="review-source">{r.source}</div>
-                <span className="review-badge">{r.badge}</span>
+                {r.badge && <span className="review-badge">{r.badge}</span>}
               </div>
             ))}
           </div>
@@ -1155,31 +1173,34 @@ export default function DiscolandWebsite() {
           <div className="about-grid">
             <div className="about-bio reveal">
               <p>
-                Born beneath the <strong>neon lights of Rotterdam</strong>, Discoland emerged in 2019 from the collision of four musicians who refused to believe that disco was dead. They were wrong — it was simply waiting for them.
+                <strong>High-energy party disco band for all your dancing needs.</strong> We are <strong>"Bangers All The Time"</strong> — an international team of talented musicians united by our love for all things disco!
               </p>
               <p>
-                Their debut EP landed with a shockwave across the Dutch underground scene, earning them residencies at <strong>Paradiso Amsterdam</strong> and an invitation to play the ADE main stage before they'd even released an album. Their sound draws from the cosmic funk of <strong>Giorgio Moroder</strong>, the raw energy of <strong>Daft Punk</strong>, and the soul of something entirely their own.
+                Are you ready to go all out and make the dance floor explode? Look no further! We play all the bangers — from disco classics by Donna Summer and Chic to modern hits by Dua Lipa and Daft Punk. We have what it takes to get you dancing.
               </p>
-              <p>
-                In 2024, their debut LP <strong>Mirror Ball</strong> debuted at #3 on the Dutch charts and was praised by critics across Europe as one of the most confident, joyful, and utterly essential records of the decade. Tour dates now span three continents.
+              <div className="about-highlight-box">
+                <p style={{ fontWeight: 600, color: "var(--pink)", marginBottom: 8 }}>✦ What We Bring to the Party ✦</p>
+                <ul>
+                  <li><strong>Live Disco Power:</strong> Everything is played and sung live! Drums, bass, keyboards, guitar and two amazing vocalists — a guaranteed dance floor explosion!</li>
+                  <li><strong>Non-stop Bangers:</strong> We play two sets of disco deliciousness, each lasting about 45 minutes. Want to keep the party going all night long? We can partner with a DJ to extend the fun!</li>
+                  <li><strong>Full Disco Experience:</strong> We take care of everything: sound, lights (disco balls!) and an experienced technician. All you have to do is come and dance!</li>
+                </ul>
+              </div>
+              <p style={{ marginTop: 20 }}>
+                Make your party an unforgettable disco experience, whether it's a wedding, birthday or other event.
               </p>
-              <p>
-                On stage, Discoland is a force of nature — <strong>four hours of non-stop euphoria</strong>, bathed in light, fog, and the collective joy of everyone who needed to hear this music.
-              </p>
-              <a href="#" className="neon-btn neon-btn-primary" style={{ marginTop: 16 }} onClick={e => e.preventDefault()}>
-                Press Kit →
-              </a>
             </div>
             <div className="reveal">
-              <div className="section-label" style={{ marginBottom: 20 }}>The Members</div>
-              <div className="members-grid">
-                {MEMBERS.map((m, i) => (
-                  <div key={i} className="member-card">
-                    <div className="member-avatar">{m.emoji}</div>
-                    <div className="member-name">{m.name}</div>
-                    <div className="member-role">{m.role}</div>
-                  </div>
-                ))}
+              <div className="glass-card" style={{ padding: 32 }}>
+                <div style={{ fontSize: 64, textAlign: "center", marginBottom: 24 }}>🪩</div>
+                <h3 style={{ textAlign: "center", color: "var(--pink)", marginBottom: 16, fontFamily: "Bebas Neue", fontSize: 28 }}>READY TO PARTY?</h3>
+                <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: 24, fontSize: 15 }}>Book us for your next event and let's create an unforgettable night of non-stop disco magic!</p>
+                <a href="#contact" className="neon-btn neon-btn-primary" style={{ width: "100%", justifyContent: "center", marginBottom: 16 }} onClick={e => { e.preventDefault(); scrollTo("contact"); }}>
+                  Book Discoland →
+                </a>
+                <div style={{ marginTop: 24, paddingTop: 24, borderTop: "1px solid var(--glass-border)" }}>
+                  <p style={{ fontSize: 14, color: "var(--cyan)", textAlign: "center" }}>✦ Making every dance floor a disco inferno ✦</p>
+                </div>
               </div>
             </div>
           </div>
@@ -1193,7 +1214,7 @@ export default function DiscolandWebsite() {
             <div className="section-label">Follow Along</div>
             <h2 className="section-title" style={{ fontSize: "clamp(40px, 6vw, 80px)" }}>Stay Connected</h2>
             <p style={{ color: "var(--muted)", marginTop: 16, fontSize: 16 }}>
-              Join the Discoland universe across every platform
+              Join our universe across every platform
             </p>
           </div>
           <div className="social-icons reveal">
@@ -1213,7 +1234,7 @@ export default function DiscolandWebsite() {
           {/* Newsletter */}
           <div className="newsletter reveal">
             <h3>JOIN THE INNER CIRCLE</h3>
-            <p>First access to tickets, exclusive content, and backstage passes.</p>
+            <p>First access to bookings, exclusive content, and behind-the-scenes passes.</p>
             <div className="newsletter-form">
               <input
                 type="email"
@@ -1247,10 +1268,6 @@ export default function DiscolandWebsite() {
                 <div className="contact-info-value">booking@discoland.nl</div>
               </div>
               <div className="contact-info-item">
-                <div className="contact-info-label">Press & Media</div>
-                <div className="contact-info-value">press@discoland.nl</div>
-              </div>
-              <div className="contact-info-item">
                 <div className="contact-info-label">General Inquiries</div>
                 <div className="contact-info-value">hello@discoland.nl</div>
               </div>
@@ -1260,7 +1277,7 @@ export default function DiscolandWebsite() {
               </div>
               <div style={{ marginTop: 8 }}>
                 <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.7 }}>
-                  For booking enquiries, please include your proposed dates, venue capacity, and event details. We typically respond within 48 hours.
+                  For booking enquiries, please include your proposed dates, event type, venue capacity, and details. We typically respond within 24-48 hours.
                 </p>
               </div>
             </div>
@@ -1288,7 +1305,7 @@ export default function DiscolandWebsite() {
                   />
                   <textarea
                     className="form-textarea"
-                    placeholder="Your message..."
+                    placeholder="Tell us about your event..."
                     value={contactForm.message}
                     onChange={e => setContactForm(f => ({ ...f, message: e.target.value }))}
                     required
@@ -1306,14 +1323,14 @@ export default function DiscolandWebsite() {
       {/* FOOTER */}
       <footer className="footer">
         <div className="container">
-          <div className="footer-logo">DISCOLAND</div>
-          <p className="footer-sub">Where the neon never fades and the beat goes on forever.</p>
+          <div className="footer-logo">BANGERS ALL THE TIME</div>
+          <p className="footer-sub">High-energy live disco for events that explode with dance.</p>
           <div className="footer-links">
             {[["hero","Home"],["music","Music"],["videos","Videos"],["tour","Tour"],["gallery","Gallery"],["about","About"],["contact","Contact"]].map(([id,label]) => (
               <a key={id} href="#" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a>
             ))}
           </div>
-          <p className="footer-copy">© 2025 Discoland · All Rights Reserved · Rotterdam, NL</p>
+          <p className="footer-copy">© 2025 Bangers All The Time · All Rights Reserved · Rotterdam, NL</p>
         </div>
       </footer>
     </div>
