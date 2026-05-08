@@ -799,14 +799,9 @@ const VIDEOS = [
 ];
 
 const TOUR_DATES = [
-  { date: "JUL 12", city: "Amsterdam", venue: "Paradiso", sold: false },
-  { date: "JUL 19", city: "Berlin", venue: "Berghain Kantine", sold: false },
-  { date: "JUL 26", city: "London", venue: "Fabric", sold: true },
-  { date: "AUG 02", city: "Paris", venue: "Rex Club", sold: false },
-  { date: "AUG 09", city: "Ibiza", venue: "Ushuaïa Beach", sold: false },
-  { date: "AUG 16", city: "Barcelona", venue: "Apolo", sold: true },
-  { date: "SEP 05", city: "New York", venue: "Brooklyn Mirage", sold: false },
-  { date: "SEP 12", city: "Los Angeles", venue: "Exchange LA", sold: false },
+  { date: "JUN 11", city: "Deventer", venue: "Wedding", sold: true },
+  { date: "JUN 20", city: "Broek op Langedijk", venue: "Broekpop", sold: false },
+  { date: "JUL 31", city: "Amsterdam", venue: "De Kring", sold: false },
 ];
 
 const GALLERY_ITEMS = [
@@ -820,11 +815,9 @@ const GALLERY_ITEMS = [
 ];
 
 const REVIEWS = [
-  { text: "Discoland is the most electrifying live act to emerge from the Dutch underground scene. Their set at Paradiso left the crowd absolutely stunned.", author: "Kevin van der Berg", source: "3voor12 / NPO Radio", badge: "Press" },
-  { text: "Pure sonic euphoria. Mirror Ball is the album of the summer — perhaps the decade. You'll want to listen to it on repeat until the sun comes up.", author: "Laura Chen", source: "Resident Advisor", badge: "Press" },
-  { text: "I've been to over 200 shows and Discoland is in my top 3 experiences EVER. The energy, the lights, the music — everything was absolutely insane.", author: "@glitterfan99", source: "Instagram", badge: "Fan" },
-  { text: "The perfect cocktail of classic disco soul and modern electronic production. Neon Fever Dream should be mandatory listening for every club night.", author: "DJ Marlowe", source: "Mixmag", badge: "Press" },
-  { text: "We flew from Tokyo specifically to see them in Ibiza. Zero regrets. They played for 4 hours straight and nobody left.", author: "@disco_tokyo", source: "Twitter", badge: "Fan" },
+  { text: "DISCOLAND brought incredible energy to our corporate year-end event, delivering amazing music and outstanding performance. The crowd absolutely loved them, dancing the night away to their fantastic setlist. Their song selection and sound quality were top-notch, making the evening truly unforgettable. We'd love to see them on our stage again in the future!", author: "Kevin van der Berg", source: "3voor12 / NPO Radio", badge: "Press" },
+  { text: "What an incredibly good band!!! Not normally good party and super nice people. If you guys don't choose this band you are crazy!!!", author: "Saskia & Menko", source: "Resident Advisor", badge: "Press" },
+  { text: "What a fantastic performance you guys put on! You really made our day even more unforgettable. We have received many compliments, everyone is really lyrical about your performance!", author: "Jan & Dore", source: "Instagram", badge: "Fan" },
 ];
 
 const MEMBERS = [
