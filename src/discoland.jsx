@@ -1,5 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import logo from './assets/logo.jpg';
+import DLPhoto1  from './assets/DLPhoto1.jpeg';
+import DLPhoto2  from './assets/DLPhoto2.jpeg';
+import DLPhoto3  from './assets/DLPhoto3.jpeg';
+import DLPhoto4  from './assets/DLPhoto4.jpeg';
+import DLPhoto5  from './assets/DLPhoto5.jpeg';
+import DLPhoto6  from './assets/DLPhoto6.jpeg';
+import DLPhoto7  from './assets/DLPhoto7.jpeg';
+import DLPhoto8  from './assets/DLPhoto8.jpeg';
+import DLPhoto9  from './assets/DLPhoto9.jpeg';
+import DLPhoto10 from './assets/DLPhoto10.jpeg';
 
 // ── Fonts ──────────────────────────────────────────────────────────────────
 const fontLink = document.createElement("link");
@@ -411,7 +421,14 @@ globalStyle.textContent = `
   .gallery-item-inner {
     width: 100%; height: 100%; min-height: 200px;
     display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative;
+    overflow: hidden;
   }
+  .gallery-item-inner img {
+    width: 100%; height: 100%; object-fit: cover;
+    position: absolute; inset: 0;
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:hover .gallery-item-inner img { transform: scale(1.06); }
   .gallery-item-overlay {
     position: absolute; inset: 0; background: rgba(255,45,120,0.3);
     display: flex; align-items: center; justify-content: center;
@@ -423,11 +440,10 @@ globalStyle.textContent = `
     display: flex; align-items: center; justify-content: center; padding: 24px;
   }
   .lightbox-img {
-    max-width: 90vw; max-height: 80vh; border-radius: 8px; font-size: 120px;
-    display: flex; align-items: center; justify-content: center;
-    min-width: 300px; min-height: 300px;
-    background: linear-gradient(135deg, rgba(155,48,255,0.2), rgba(255,45,120,0.2));
+    max-width: 90vw; max-height: 80vh;
+    border-radius: 8px; object-fit: contain;
     border: 1px solid var(--glass-border);
+    box-shadow: 0 0 60px rgba(255,45,120,0.2);
   }
   .lightbox-close {
     position: absolute; top: 24px; right: 32px; font-size: 40px; cursor: pointer;
@@ -605,15 +621,10 @@ const TRACKS = [
 ];
 
 const VIDEOS = [
-  { id: 1, title: "Neon Fever Dream",     sub: "Official Performance · 2024",  emoji: "🎬", bg: "linear-gradient(135deg, #1a0030, #ff2d78)", youtubeId: null },
-  { id: 2, title: "Saturday Forever",    sub: "Live at Paradiso Amsterdam",    emoji: "🎤", bg: "linear-gradient(135deg, #001a30, #9b30ff)", youtubeId: null },
-  { id: 3, title: "Ultraviolet Love",    sub: "Behind the Scenes",            emoji: "🎥", bg: "linear-gradient(135deg, #301a00, #ffd700)", youtubeId: null },
-  { id: 4, title: "Glitterball Prophecy",sub: "Live Performance",             emoji: "✨", bg: "linear-gradient(135deg, #003020, #00f5ff)", youtubeId: null },
-  { id: 5, title: "Bangers All The Time",sub: "Full Set · Amsterdam",         emoji: "🎶", bg: "linear-gradient(135deg, #200030, #ff2d78)", youtubeId: null },
-  { id: 6, title: "Disco Inferno",       sub: "Event Highlights",             emoji: "👻", bg: "linear-gradient(135deg, #0a0a2a, #9b30ff)", youtubeId: null },
+  { id: 1, title: "Discoland Promo",        sub: "Official Promo Video",         youtubeId: "J70XtMp2lV8" },
+  { id: 2, title: "Discoland Promo 2",      sub: "Official Promo Video",         youtubeId: "gn9SxkdTYfY" },
+  { id: 3, title: "Discoland Wedding Party",sub: "Live at a Wedding",            youtubeId: "eHhIshWbhlc" },
 ];
-// ↑ To add a real YouTube video, set youtubeId to the ID from the URL.
-// Example: https://youtube.com/watch?v=dQw4w9WgXcQ → youtubeId: "dQw4w9WgXcQ"
 
 const TOUR_DATES = [
   { date: "JUN 11", city: "Deventer",           venue: "Wedding",    sold: true,  ticketUrl: null },
@@ -623,16 +634,17 @@ const TOUR_DATES = [
 // ↑ To add more dates: { date: "AUG 15", city: "Rotterdam", venue: "Venue Name", sold: false, ticketUrl: "https://..." }
 
 const GALLERY_ITEMS = [
-  { emoji: "🪩", bg: "linear-gradient(135deg,#1a0030,#9b30ff)", feat: true  },
-  { emoji: "🎸", bg: "linear-gradient(135deg,#300030,#ff2d78)", feat: false },
-  { emoji: "🎤", bg: "linear-gradient(135deg,#001a30,#00f5ff)", feat: false },
-  { emoji: "💡", bg: "linear-gradient(135deg,#301a00,#ffd700)", feat: false },
-  { emoji: "🥁", bg: "linear-gradient(135deg,#003020,#00f5ff)", feat: false },
-  { emoji: "🎹", bg: "linear-gradient(135deg,#200030,#ff2d78)", feat: false },
-  { emoji: "🌈", bg: "linear-gradient(135deg,#1a1a00,#ffd700)", feat: false },
+  { src: DLPhoto1,  feat: true  },
+  { src: DLPhoto2,  feat: false },
+  { src: DLPhoto3,  feat: false },
+  { src: DLPhoto4,  feat: false },
+  { src: DLPhoto5,  feat: false },
+  { src: DLPhoto6,  feat: false },
+  { src: DLPhoto7,  feat: false },
+  { src: DLPhoto8,  feat: false },
+  { src: DLPhoto9,  feat: false },
+  { src: DLPhoto10, feat: false },
 ];
-// ↑ To use real photos, change emoji + bg to: { src: "/gallery/photo1.jpg", feat: true }
-// Then in the JSX below, replace the gradient div with: <img src={item.src} style={{width:"100%",height:"100%",objectFit:"cover"}} />
 
 const REVIEWS = [
   {
@@ -862,8 +874,12 @@ export default function DiscolandWebsite() {
           <div className="video-grid">
             {VIDEOS.map(v => (
               <div key={v.id} className="video-card reveal" onClick={() => setVideoModal(v)}>
-                <div className="video-thumb" style={{ background: v.bg }}>
-                  <span style={{ position:"relative", zIndex:1, fontSize:64 }}>{v.emoji}</span>
+                <div className="video-thumb" style={{ background: "#000", padding: 0 }}>
+                  <img
+                    src={`https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg`}
+                    alt={v.title}
+                    style={{ width:"100%", height:"100%", objectFit:"cover", position:"absolute", inset:0 }}
+                  />
                   <div className="video-overlay"><div className="play-icon">▶</div></div>
                 </div>
                 <div className="video-info">
@@ -881,22 +897,11 @@ export default function DiscolandWebsite() {
         <div className="video-modal" onClick={() => setVideoModal(null)}>
           <div className="video-modal-inner" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setVideoModal(null)}>✕</button>
-            {videoModal.youtubeId
-              ? <iframe
-                  width="100%" style={{ aspectRatio:"16/9", borderRadius:12, border:"none", display:"block" }}
-                  src={`https://www.youtube.com/embed/${videoModal.youtubeId}?autoplay=1`}
-                  allow="autoplay; encrypted-media" allowFullScreen
-                />
-              : <div className="video-embed" style={{ background: videoModal.bg }}>
-                  <span style={{ fontSize:48 }}>{videoModal.emoji}</span>
-                  <span style={{ fontFamily:"Syncopate", fontSize:11, letterSpacing:"0.2em" }}>
-                    {videoModal.title}
-                  </span>
-                  <span style={{ fontSize:12, opacity:0.5 }}>
-                    Add a YouTube ID to VIDEOS array to embed a real video
-                  </span>
-                </div>
-            }
+            <iframe
+              width="100%" style={{ aspectRatio:"16/9", borderRadius:12, border:"none", display:"block" }}
+              src={`https://www.youtube.com/embed/${videoModal.youtubeId}?autoplay=1`}
+              allow="autoplay; encrypted-media" allowFullScreen
+            />
           </div>
         </div>
       )}
@@ -943,8 +948,8 @@ export default function DiscolandWebsite() {
                 className={`gallery-item${item.feat ? " gallery-featured" : ""}`}
                 onClick={() => setLightbox(item)}
               >
-                <div className="gallery-item-inner" style={{ background: item.bg }}>
-                  <span style={{ position:"relative", zIndex:1 }}>{item.emoji}</span>
+                <div className="gallery-item-inner">
+                  <img src={item.src} alt={`Discoland photo ${i + 1}`} />
                   <div className="gallery-item-overlay">🔍</div>
                 </div>
               </div>
@@ -956,7 +961,7 @@ export default function DiscolandWebsite() {
       {lightbox && (
         <div className="lightbox" onClick={() => setLightbox(null)}>
           <button className="lightbox-close">✕</button>
-          <div className="lightbox-img" style={{ background: lightbox.bg }}>{lightbox.emoji}</div>
+          <img src={lightbox.src} alt="Discoland" className="lightbox-img" />
         </div>
       )}
 
