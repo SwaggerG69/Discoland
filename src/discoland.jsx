@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import logo from './assets/logo.jpg';
 
 // ── Fonts ──────────────────────────────────────────────────────────────────
 const fontLink = document.createElement("link");
@@ -126,10 +127,19 @@ globalStyle.textContent = `
     padding: 20px 40px;
   }
   .nav-logo {
-    font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.08em;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer; transition: transform 0.3s ease;
+  }
+  .nav-logo:hover { transform: scale(1.05); }
+  .nav-logo img {
+    height: 40px; width: auto;
+    filter: drop-shadow(0 0 8px rgba(255,45,120,0.4));
+  }
+  .nav-logo-text {
+    font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.1em;
     background: linear-gradient(90deg, var(--gold), var(--pink));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    animation: flicker 8s infinite; cursor: pointer; line-height: 1;
+    animation: flicker 8s infinite;
   }
   .nav-links { display: flex; gap: 36px; list-style: none; }
   .nav-links a {
@@ -548,12 +558,36 @@ const PLAYLIST_ID = import.meta.env.VITE_SPOTIFY_PLAYLIST_ID || "0D65SXdYNzt08vl
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const TRACKS = [
-  { id: 1, name: "Neon Fever Dream",     artist: "Donna Summer Cover",       duration: "3:47", emoji: "🌙" },
-  { id: 2, name: "Ultraviolet Love",     artist: "Chic Cover",               duration: "4:12", emoji: "💜" },
-  { id: 3, name: "Saturday Forever",    artist: "Dua Lipa Cover",           duration: "3:58", emoji: "✨" },
-  { id: 4, name: "Studio 54 Ghost",     artist: "Bee Gees Cover",           duration: "5:01", emoji: "👻" },
-  { id: 5, name: "Glitterball Prophecy",artist: "Earth Wind & Fire Cover",  duration: "4:33", emoji: "🔮" },
-  { id: 6, name: "Midnight Transmission",artist: "Daft Punk Cover",         duration: "6:14", emoji: "📻" },
+  { id:  1, name: "Car Wash",                  artist: "Rose Royce",                      duration: "3:52", emoji: "🚗" },
+  { id:  2, name: "Bad Girls",                 artist: "Donna Summer",                    duration: "4:01", emoji: "💃" },
+  { id:  3, name: "Don't Start Now",           artist: "Dua Lipa",                        duration: "3:03", emoji: "✨" },
+  { id:  4, name: "Get Lucky",                 artist: "Daft Punk ft. Pharrell Williams", duration: "4:08", emoji: "🍀" },
+  { id:  5, name: "Boogie Nights",             artist: "Heatwave",                        duration: "3:45", emoji: "🌙" },
+  { id:  6, name: "Disco Inferno",             artist: "The Trammps",                     duration: "3:39", emoji: "🔥" },
+  { id:  7, name: "Gimme! Gimme! Gimme!",      artist: "ABBA",                            duration: "4:50", emoji: "💫" },
+  { id:  8, name: "Le Freak",                  artist: "CHIC",                            duration: "3:32", emoji: "🎸" },
+  { id:  9, name: "I Will Survive",            artist: "Gloria Gaynor",                   duration: "3:15", emoji: "✊" },
+  { id: 10, name: "Murder On The Dancefloor",  artist: "Sophie Ellis-Bextor",             duration: "3:46", emoji: "🪩" },
+  { id: 11, name: "September",                 artist: "Earth, Wind & Fire",              duration: "3:35", emoji: "🌟" },
+  { id: 12, name: "Uptown Funk",               artist: "Mark Ronson ft. Bruno Mars",      duration: "4:30", emoji: "🔥" },
+  { id: 13, name: "Voulez-Vous",               artist: "ABBA",                            duration: "5:09", emoji: "🌈" },
+  { id: 14, name: "It's Raining Men",          artist: "The Weather Girls",               duration: "4:05", emoji: "⛈️" },
+  { id: 15, name: "Can't Get You Out of My Head", artist: "Kylie Minogue",               duration: "3:49", emoji: "💿" },
+  { id: 16, name: "Billie Jean",               artist: "Michael Jackson",                 duration: "4:54", emoji: "🎩" },
+  { id: 17, name: "Levitating",                artist: "Dua Lipa",                        duration: "3:23", emoji: "🚀" },
+  { id: 18, name: "About Damn Time",           artist: "Lizzo",                           duration: "3:13", emoji: "⏰" },
+  { id: 19, name: "Cosmic Girl",               artist: "Jamiroquai",                      duration: "5:01", emoji: "🌌" },
+  { id: 20, name: "We Are Family",             artist: "Sister Sledge",                   duration: "3:28", emoji: "👨‍👩‍👧‍👦" },
+  { id: 21, name: "Espresso",                  artist: "Sabrina Carpenter",               duration: "2:55", emoji: "☕" },
+  { id: 22, name: "Hot Stuff",                 artist: "Donna Summer",                    duration: "3:48", emoji: "🌶️" },
+  { id: 23, name: "Play That Funky Music",     artist: "Wild Cherry",                     duration: "4:27", emoji: "🎵" },
+  { id: 24, name: "Relight My Fire",           artist: "Dan Hartman",                     duration: "4:11", emoji: "🕯️" },
+  { id: 25, name: "Blue Monday '88",           artist: "New Order",                       duration: "4:46", emoji: "📅" },
+  { id: 26, name: "Canned Heat",               artist: "Jamiroquai",                      duration: "4:37", emoji: "🥫" },
+  { id: 27, name: "In The Dark",               artist: "Purple Disco Machine",            duration: "4:38", emoji: "🔮" },
+  { id: 28, name: "Sing It Back",              artist: "Moloko",                          duration: "7:11", emoji: "🎤" },
+  { id: 29, name: "Venus",                     artist: "Bananarama",                      duration: "3:51", emoji: "♀️" },
+  { id: 30, name: "I Was Made For Lovin' You", artist: "KISS",                            duration: "4:32", emoji: "💋" },
 ];
 
 const VIDEOS = [
@@ -660,7 +694,8 @@ export default function DiscolandWebsite() {
       <nav className={`nav${navScrolled ? " scrolled" : ""}`}>
         <div className="nav-inner">
           <div className="nav-logo" onClick={() => scrollTo("hero")}>
-            BANGERS ALL TIME
+            <img src={logo} alt="Bangers All Time" />
+            <span className="nav-logo-text">BANGERS ALL TIME</span>
           </div>
           <ul className={`nav-links${navOpen ? " open" : ""}`}>
             {[["music","Music"],["videos","Videos"],["tour","Tour"],["gallery","Gallery"],["about","About"],["contact","Contact"]].map(([id, label]) => (
