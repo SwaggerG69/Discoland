@@ -248,7 +248,21 @@ globalStyle.textContent = `
   /* Music */
   .music-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 60px; }
   @media (max-width: 768px) { .music-grid { grid-template-columns: 1fr; } }
-  .track-list { display: flex; flex-direction: column; gap: 8px; }
+  .track-list {
+    display: flex; flex-direction: column; gap: 8px;
+    max-height: 420px; overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-width: thin; scrollbar-color: var(--pink) transparent;
+  }
+  .track-list::-webkit-scrollbar { width: 4px; }
+  .track-list::-webkit-scrollbar-track { background: transparent; }
+  .track-list::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 2px; }
+
+  .hero-logo {
+    width: 160px; height: auto; margin-bottom: 28px;
+    filter: drop-shadow(0 0 24px rgba(255,45,120,0.7));
+    animation: float 4s ease-in-out infinite, fadeUp 0.5s ease both;
+  }
   .track-item {
     display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 12px;
     background: var(--glass); border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.3s ease;
@@ -694,8 +708,8 @@ export default function DiscolandWebsite() {
       <nav className={`nav${navScrolled ? " scrolled" : ""}`}>
         <div className="nav-inner">
           <div className="nav-logo" onClick={() => scrollTo("hero")}>
-            <img src={logo} alt="Bangers All Time" />
-            <span className="nav-logo-text">BANGERS ALL TIME</span>
+            <img src={logo} alt="Discoland" />
+            <span className="nav-logo-text">DISCOLAND</span>
           </div>
           <ul className={`nav-links${navOpen ? " open" : ""}`}>
             {[["music","Music"],["videos","Videos"],["tour","Tour"],["gallery","Gallery"],["about","About"],["contact","Contact"]].map(([id, label]) => (
@@ -715,10 +729,11 @@ export default function DiscolandWebsite() {
         <div className="disco-ball" />
         <div className="scan-line" />
         <div className="hero-content">
+          <img src={logo} alt="Discoland" className="hero-logo" />
           <div className="hero-eyebrow">Amsterdam · High-Energy Disco · Live</div>
-          <h1 className="hero-title">BANGERS<br/>ALL TIME</h1>
+          <h1 className="hero-title">DISCOLAND</h1>
           <p className="hero-tagline">
-            Where the <span>dance floor explodes</span> with non-stop disco magic
+            <span>Bangers All The Time</span> — where the dance floor explodes with non-stop disco magic
           </p>
           <div className="hero-ctas">
             <a href="#" className="neon-btn neon-btn-primary" onClick={e => { e.preventDefault(); scrollTo("music"); }}>
@@ -743,7 +758,7 @@ export default function DiscolandWebsite() {
         <div className="ticker-inner">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="ticker-text">
-              BANGERS ALL THE TIME <span className="ticker-dot">✦</span> LIVE DISCO COVERS <span className="ticker-dot">✦</span> DANCE FLOOR EXPLOSION <span className="ticker-dot">✦</span> BOOK US FOR YOUR EVENT <span className="ticker-dot">✦</span>
+              DISCOLAND <span className="ticker-dot">✦</span> BANGERS ALL THE TIME <span className="ticker-dot">✦</span> LIVE DISCO COVERS <span className="ticker-dot">✦</span> DANCE FLOOR EXPLOSION <span className="ticker-dot">✦</span> BOOK US FOR YOUR EVENT <span className="ticker-dot">✦</span>
             </span>
           ))}
         </div>
@@ -787,7 +802,7 @@ export default function DiscolandWebsite() {
               <div className="player-art">{track?.emoji}</div>
               <div>
                 <div className="player-title">{track?.name}</div>
-                <div className="player-artist">Bangers All Time · {track?.artist}</div>
+                <div className="player-artist">Discoland · {track?.artist}</div>
               </div>
               <div>
                 <div className="progress-bar" onClick={e => {
@@ -978,7 +993,7 @@ export default function DiscolandWebsite() {
           <div className="about-grid">
             <div className="about-bio reveal">
               <p>
-                <strong>High-energy party disco band for all your dancing needs.</strong> Based in <strong>Amsterdam</strong>, we are <strong>Bangers All The Time</strong> — an international live disco band ready to make your event unforgettable.
+                <strong>High-energy party disco band for all your dancing needs.</strong> Based in <strong>Amsterdam</strong>, we are <strong>Discoland</strong> — an international live disco band ready to make your event unforgettable.
               </p>
               <p>
                 Are you ready to go all out and make the dance floor explode? Look no further! We play all the bangers — from disco classics by Donna Summer and Chic to modern hits by Dua Lipa, all played and sung live.
@@ -1010,7 +1025,7 @@ export default function DiscolandWebsite() {
                   style={{ width:"100%", justifyContent:"center", marginBottom:16 }}
                   onClick={e => { e.preventDefault(); scrollTo("contact"); }}
                 >
-                  Book Bangers All Time →
+                  Book Discoland →
                 </a>
                 <div style={{ marginTop:24, paddingTop:24, borderTop:"1px solid var(--glass-border)" }}>
                   <p style={{ fontSize:14, color:"var(--cyan)", textAlign:"center" }}>
@@ -1114,14 +1129,14 @@ export default function DiscolandWebsite() {
       {/* ── FOOTER ── */}
       <footer className="footer">
         <div className="container">
-          <div className="footer-logo">BANGERS ALL TIME</div>
+          <div className="footer-logo">DISCOLAND</div>
           <p className="footer-sub">High-energy live disco for events that explode with dance.</p>
           <div className="footer-links">
             {[["hero","Home"],["music","Music"],["videos","Videos"],["tour","Tour"],["gallery","Gallery"],["about","About"],["contact","Contact"]].map(([id, label]) => (
               <a key={id} href="#" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a>
             ))}
           </div>
-          <p className="footer-copy">© 2025 Bangers All The Time · Amsterdam, NL · @discoland.music</p>
+          <p className="footer-copy">© 2025 Discoland · Amsterdam, NL · @discoland.music</p>
         </div>
       </footer>
 
