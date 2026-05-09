@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import logo from './assets/logo';
 
 // ── Fonts via Google Fonts (injected in head) ──────────────────────────────
 const fontLink = document.createElement("link");
@@ -6,7 +7,7 @@ fontLink.rel = "stylesheet";
 fontLink.href = "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syncopate:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap";
 document.head.appendChild(fontLink);
 
-// ── Global styles ───────────────────────────────────────────────────────────
+// ── Global styles ─────────────────────────────────────────────────────────
 const globalStyle = document.createElement("style");
 globalStyle.textContent = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,7 +38,7 @@ globalStyle.textContent = `
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctave[...]
     opacity: 0.35;
   }
 
@@ -158,12 +159,24 @@ globalStyle.textContent = `
     padding: 20px 40px;
   }
   .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .nav-logo:hover {
+    transform: scale(1.05);
+  }
+  .nav-logo img {
+    height: 40px;
+    width: auto;
+    filter: drop-shadow(0 0 8px rgba(255,45,120,0.4));
+  }
+  .nav-logo-text {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px; letter-spacing: 0.1em;
+    font-size: 20px; letter-spacing: 0.1em;
     background: linear-gradient(90deg, var(--gold), var(--pink));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     animation: flicker 8s infinite;
-    cursor: pointer;
   }
   .nav-links { display: flex; gap: 36px; list-style: none; }
   .nav-links a {
@@ -842,9 +855,9 @@ const GALLERY_ITEMS = [
 ];
 
 const REVIEWS = [
-  { text: "DISCOLAND brought incredible energy to our corporate year-end event, delivering amazing music and outstanding performance. The crowd absolutely loved them, dancing the night away to the best disco beats.", author: "Corporate Events Team", source: "Direct Booking", badge: "Verified" },
-  { text: "What an incredibly good band!!! Not normally good party and super nice people. If you guys don't choose this band you are crazy!!!", author: "Saskia & Menko", source: "Resident Advisor" },
-  { text: "What a fantastic performance you guys put on! You really made our day even more unforgettable. We have received many compliments, everyone is really lyrical about your performance!", author: "Wedding Clients", source: "Direct Feedback", badge: "5 Stars" },
+  { text: "DISCOLAND brought incredible energy to our corporate year-end event, delivering amazing music and outstanding performance. The crowd absolutely loved them, dancing the night away to th[...]
+  { text: "What an incredibly good band!!! Not normally good party and super nice people. If you guys don't choose this band you are crazy!!!", author: "Saskia & Menko", source: "Resident Advisor[...]
+  { text: "What a fantastic performance you guys put on! You really made our day even more unforgettable. We have received many compliments, everyone is really lyrical about your performance!", a[...]
 ];
 
 // ── Hooks ───────────────────────────────────────────────────────────
@@ -860,7 +873,7 @@ function useScrollReveal() {
   });
 }
 
-// ── App ──────────────────────────────────────────────────────────────
+// ── App ────────────────────────────────────────────────────────────
 export default function DiscolandWebsite() {
   const [navScrolled, setNavScrolled] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -906,7 +919,10 @@ export default function DiscolandWebsite() {
       {/* NAV */}
       <nav className={`nav${navScrolled ? " scrolled" : ""}`}>
         <div className="nav-inner">
-          <div className="nav-logo" onClick={() => scrollTo("hero")}>BANGERS ALL TIME</div>
+          <div className="nav-logo" onClick={() => scrollTo("hero")}>
+            <img src={logo} alt="Bangers All Time Logo" />
+            <span className="nav-logo-text">BANGERS</span>
+          </div>
           <ul className={`nav-links${navOpen ? " open" : ""}`}>
             {[["music","Music"],["videos","Videos"],["tour","Tour"],["gallery","Gallery"],["about","About"],["contact","Contact"]].map(([id,label]) => (
               <li key={id}><a href="#" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a></li>
@@ -953,7 +969,7 @@ export default function DiscolandWebsite() {
         <div className="ticker-inner">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="ticker-text">
-              BANGERS ALL THE TIME <span className="ticker-dot">✦</span> LIVE DISCO COVERS <span className="ticker-dot">✦</span> DANCE FLOOR EXPLOSION <span className="ticker-dot">✦</span> FOLLOW @DISCOLAND.MUSIC
+              BANGERS ALL THE TIME <span className="ticker-dot">✦</span> LIVE DISCO COVERS <span className="ticker-dot">✦</span> DANCE FLOOR EXPLOSION <span className="ticker-dot">✦</span> [...]
             </span>
           ))}
         </div>
@@ -1172,16 +1188,16 @@ export default function DiscolandWebsite() {
           <div className="about-grid">
             <div className="about-bio reveal">
               <p>
-                <strong>High-energy party disco band for all your dancing needs.</strong> Based in <strong>Amsterdam</strong>, we are <strong>"Bangers All The Time"</strong> — an international team of talented musicians united by our love for all things disco!
+                <strong>High-energy party disco band for all your dancing needs.</strong> Based in <strong>Amsterdam</strong>, we are <strong>"Bangers All The Time"</strong> — an international[...]
               </p>
               <p>
-                Are you ready to go all out and make the dance floor explode? Look no further! We play all the bangers — from disco classics by Donna Summer and Chic to modern hits by Dua Lipa and Daft Punk. We have what it takes to get you dancing.
+                Are you ready to go all out and make the dance floor explode? Look no further! We play all the bangers — from disco classics by Donna Summer and Chic to modern hits by Dua Lipa[...]
               </p>
               <div className="about-highlight-box">
                 <p style={{ fontWeight: 600, color: "var(--pink)", marginBottom: 8 }}>✦ What We Bring to the Party ✦</p>
                 <ul>
                   <li><strong>Live Disco Power:</strong> Everything is played and sung live! Drums, bass, keyboards, guitar and two amazing vocalists — a guaranteed dance floor explosion!</li>
-                  <li><strong>Non-stop Bangers:</strong> We play two sets of disco deliciousness, each lasting about 45 minutes. Want to keep the party going all night long? We can partner with a DJ to extend the fun!</li>
+                  <li><strong>Non-stop Bangers:</strong> We play two sets of disco deliciousness, each lasting about 45 minutes. Want to keep the party going all night long? We can partner with [...]
                   <li><strong>Full Disco Experience:</strong> We take care of everything: sound, lights (disco balls!) and an experienced technician. All you have to do is come and dance!</li>
                 </ul>
               </div>
@@ -1193,8 +1209,8 @@ export default function DiscolandWebsite() {
               <div className="glass-card" style={{ padding: 32 }}>
                 <div style={{ fontSize: 64, textAlign: "center", marginBottom: 24 }}>🪩</div>
                 <h3 style={{ textAlign: "center", color: "var(--pink)", marginBottom: 16, fontFamily: "Bebas Neue", fontSize: 28 }}>READY TO PARTY?</h3>
-                <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: 24, fontSize: 15 }}>Book us for your next event and let's create an unforgettable night of non-stop disco magic!</p>
-                <a href="#contact" className="neon-btn neon-btn-primary" style={{ width: "100%", justifyContent: "center", marginBottom: 16 }} onClick={e => { e.preventDefault(); scrollTo("contact"); }}>
+                <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: 24, fontSize: 15 }}>Book us for your next event and let's create an unforgettable night of non-stop disco ma[...]
+                <a href="#contact" className="neon-btn neon-btn-primary" style={{ width: "100%", justifyContent: "center", marginBottom: 16 }} onClick={e => { e.preventDefault(); scrollTo("conta[...]
                   Book Bangers All Time →
                 </a>
                 <div style={{ marginTop: 24, paddingTop: 24, borderTop: "1px solid var(--glass-border)" }}>
