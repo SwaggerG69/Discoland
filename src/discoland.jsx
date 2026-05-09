@@ -788,10 +788,12 @@ globalStyle.textContent = `
     margin-top: 40px; border-radius: 16px; overflow: hidden;
     background: var(--glass); border: 1px solid var(--glass-border);
     padding: 24px; display: flex; align-items: center; gap: 20px;
+    flex-wrap: wrap;
   }
   .spotify-icon { font-size: 48px; color: #1DB954; }
   .spotify-text h4 { font-weight: 600; margin-bottom: 4px; }
   .spotify-text p { font-size: 13px; color: var(--muted); }
+  .spotify-text { flex: 1; min-width: 250px; }
 
   /* Scroll animations */
   .reveal {
@@ -806,21 +808,21 @@ document.head.appendChild(globalStyle);
 
 // ── Data ────────────────────────────────────────────────────────────
 const TRACKS = [
-  { id: 1, name: "Neon Fever Dream", album: "Mirror Ball (2024)", duration: "3:47", emoji: "🌙" },
-  { id: 2, name: "Ultraviolet Love", album: "Mirror Ball (2024)", duration: "4:12", emoji: "💜" },
-  { id: 3, name: "Saturday Forever", album: "Mirror Ball (2024)", duration: "3:58", emoji: "✨" },
-  { id: 4, name: "Studio 54 Ghost", album: "Discoland EP (2023)", duration: "5:01", emoji: "👻" },
-  { id: 5, name: "Glitterball Prophecy", album: "Discoland EP (2023)", duration: "4:33", emoji: "🔮" },
-  { id: 6, name: "Midnight Transmission", album: "Discoland EP (2023)", duration: "6:14", emoji: "📻" },
+  { id: 1, name: "Neon Fever Dream", artist: "Donna Summer Cover", duration: "3:47", emoji: "🌙" },
+  { id: 2, name: "Ultraviolet Love", artist: "Chic Cover", duration: "4:12", emoji: "💜" },
+  { id: 3, name: "Saturday Forever", artist: "Dua Lipa Cover", duration: "3:58", emoji: "✨" },
+  { id: 4, name: "Studio 54 Ghost", artist: "Bee Gees Cover", duration: "5:01", emoji: "👻" },
+  { id: 5, name: "Glitterball Prophecy", artist: "Earth Wind & Fire Cover", duration: "4:33", emoji: "🔮" },
+  { id: 6, name: "Midnight Transmission", artist: "Daft Punk Cover", duration: "6:14", emoji: "📻" },
 ];
 
 const VIDEOS = [
-  { id: 1, title: "Neon Fever Dream", sub: "Official Music Video · 2024", emoji: "🎬", bg: "linear-gradient(135deg, #1a0030, #ff2d78)" },
+  { id: 1, title: "Neon Fever Dream", sub: "Official Performance · 2024", emoji: "🎬", bg: "linear-gradient(135deg, #1a0030, #ff2d78)" },
   { id: 2, title: "Saturday Forever", sub: "Live at Paradiso Amsterdam", emoji: "🎤", bg: "linear-gradient(135deg, #001a30, #9b30ff)" },
   { id: 3, title: "Ultraviolet Love", sub: "Behind the Scenes", emoji: "🎥", bg: "linear-gradient(135deg, #301a00, #ffd700)" },
-  { id: 4, title: "Glitterball Prophecy", sub: "Lyric Video", emoji: "✨", bg: "linear-gradient(135deg, #003020, #00f5ff)" },
-  { id: 5, title: "Discoland Live 2024", sub: "Full Concert · ADE Special", emoji: "🎶", bg: "linear-gradient(135deg, #200030, #ff2d78)" },
-  { id: 6, title: "Studio 54 Ghost", sub: "Visualizer", emoji: "👻", bg: "linear-gradient(135deg, #0a0a2a, #9b30ff)" },
+  { id: 4, title: "Glitterball Prophecy", sub: "Live Performance", emoji: "✨", bg: "linear-gradient(135deg, #003020, #00f5ff)" },
+  { id: 5, title: "Bangers All The Time", sub: "Full Set · Amsterdam", emoji: "🎶", bg: "linear-gradient(135deg, #200030, #ff2d78)" },
+  { id: 6, title: "Disco Inferno", sub: "Event Highlights", emoji: "👻", bg: "linear-gradient(135deg, #0a0a2a, #9b30ff)" },
 ];
 
 const TOUR_DATES = [
@@ -904,7 +906,7 @@ export default function DiscolandWebsite() {
       {/* NAV */}
       <nav className={`nav${navScrolled ? " scrolled" : ""}`}>
         <div className="nav-inner">
-          <div className="nav-logo" onClick={() => scrollTo("hero")}>DISCOLAND</div>
+          <div className="nav-logo" onClick={() => scrollTo("hero")}>BANGERS ALL TIME</div>
           <ul className={`nav-links${navOpen ? " open" : ""}`}>
             {[["music","Music"],["videos","Videos"],["tour","Tour"],["gallery","Gallery"],["about","About"],["contact","Contact"]].map(([id,label]) => (
               <li key={id}><a href="#" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a></li>
@@ -923,20 +925,20 @@ export default function DiscolandWebsite() {
         <div className="disco-ball" />
         <div className="scan-line" />
         <div className="hero-content">
-          <div className="hero-eyebrow">Rotterdam · Amsterdam · The World</div>
-          <h1 className="hero-title">DISCOLAND</h1>
+          <div className="hero-eyebrow">Amsterdam · High-Energy Disco · Live</div>
+          <h1 className="hero-title">BANGERS<br/>ALL TIME</h1>
           <p className="hero-tagline">
-            Where the <span>neon never fades</span> and the beat goes on forever
+            Where the <span>dance floor explodes</span> with non-stop disco magic
           </p>
           <div className="hero-ctas">
             <a href="#" className="neon-btn neon-btn-primary" onClick={e => { e.preventDefault(); scrollTo("music"); }}>
-              ▶ Listen Now
+              ▶ Hear Our Setlist
             </a>
             <a href="#" className="neon-btn neon-btn-outline" onClick={e => { e.preventDefault(); scrollTo("videos"); }}>
               ◉ Watch Videos
             </a>
-            <a href="#" className="neon-btn neon-btn-outline" onClick={e => { e.preventDefault(); scrollTo("tour"); }}>
-              ◈ Tour Dates
+            <a href="#" className="neon-btn neon-btn-outline" onClick={e => { e.preventDefault(); scrollTo("contact"); }}>
+              ◈ Book Us
             </a>
           </div>
         </div>
@@ -951,7 +953,7 @@ export default function DiscolandWebsite() {
         <div className="ticker-inner">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="ticker-text">
-              BANGERS ALL THE TIME <span className="ticker-dot">✦</span> LIVE DISCO POWER <span className="ticker-dot">✦</span> DANCE FLOOR EXPLOSION <span className="ticker-dot">✦</span> BOOK US NOW
+              BANGERS ALL THE TIME <span className="ticker-dot">✦</span> LIVE DISCO COVERS <span className="ticker-dot">✦</span> DANCE FLOOR EXPLOSION <span className="ticker-dot">✦</span> FOLLOW @DISCOLAND.MUSIC
             </span>
           ))}
         </div>
@@ -961,7 +963,7 @@ export default function DiscolandWebsite() {
       <section id="music">
         <div className="container">
           <div className="reveal">
-            <div className="section-label">Discography</div>
+            <div className="section-label">Setlist</div>
             <h2 className="section-title">The Music</h2>
           </div>
           <div className="music-grid reveal">
@@ -982,7 +984,7 @@ export default function DiscolandWebsite() {
                   </div>
                   <div className="track-info">
                     <div className="track-name">{t.name}</div>
-                    <div className="track-meta">{t.album}</div>
+                    <div className="track-meta">{t.artist}</div>
                   </div>
                   <div className="track-duration">{t.duration}</div>
                 </div>
@@ -994,7 +996,7 @@ export default function DiscolandWebsite() {
               <div className="player-art">{track?.emoji}</div>
               <div>
                 <div className="player-title">{track?.name}</div>
-                <div className="player-artist">Discoland · {track?.album}</div>
+                <div className="player-artist">Bangers All Time · {track?.artist}</div>
               </div>
               <div>
                 <div
@@ -1018,22 +1020,19 @@ export default function DiscolandWebsite() {
                 </button>
                 <button className="ctrl-btn" onClick={() => setActiveTrack(t => t < TRACKS.length ? t + 1 : 1)}>⏭</button>
               </div>
-              <div className="streaming-links">
-                <a href="#" className="stream-btn">🎵 Spotify</a>
-                <a href="#" className="stream-btn">🍎 Apple Music</a>
-                <a href="#" className="stream-btn">▶ YouTube</a>
-              </div>
             </div>
           </div>
 
-          {/* Spotify placeholder */}
-          <div className="spotify-embed reveal" style={{ marginTop: 40 }}>
+          {/* Spotify playlist */}
+          <div className="spotify-embed reveal">
             <div className="spotify-icon">🎧</div>
             <div className="spotify-text">
               <h4>Listen on Spotify</h4>
-              <p>Follow Discoland and stream our full discography and curated playlists</p>
+              <p>Full setlist and all our disco covers in one playlist</p>
             </div>
-            <a href="#" className="neon-btn neon-btn-primary" style={{ marginLeft: "auto", flexShrink: 0 }}>Follow</a>
+            <a href="https://open.spotify.com/playlist/0D65SXdYNzt08vllqbkCA6?si=LempJ5RNTKmyWgQDUZX3aw" target="_blank" rel="noopener noreferrer" className="neon-btn neon-btn-primary">
+              Open Playlist →
+            </a>
           </div>
         </div>
       </section>
@@ -1083,7 +1082,7 @@ export default function DiscolandWebsite() {
         <div className="container">
           <div className="reveal">
             <div className="section-label">Live</div>
-            <h2 className="section-title">Tour Dates</h2>
+            <h2 className="section-title">Upcoming Dates</h2>
           </div>
           <div className="tour-table">
             {TOUR_DATES.map((show, i) => (
@@ -1173,7 +1172,7 @@ export default function DiscolandWebsite() {
           <div className="about-grid">
             <div className="about-bio reveal">
               <p>
-                <strong>High-energy party disco band for all your dancing needs.</strong> We are <strong>"Bangers All The Time"</strong> — an international team of talented musicians united by our love for all things disco!
+                <strong>High-energy party disco band for all your dancing needs.</strong> Based in <strong>Amsterdam</strong>, we are <strong>"Bangers All The Time"</strong> — an international team of talented musicians united by our love for all things disco!
               </p>
               <p>
                 Are you ready to go all out and make the dance floor explode? Look no further! We play all the bangers — from disco classics by Donna Summer and Chic to modern hits by Dua Lipa and Daft Punk. We have what it takes to get you dancing.
@@ -1196,7 +1195,7 @@ export default function DiscolandWebsite() {
                 <h3 style={{ textAlign: "center", color: "var(--pink)", marginBottom: 16, fontFamily: "Bebas Neue", fontSize: 28 }}>READY TO PARTY?</h3>
                 <p style={{ textAlign: "center", color: "var(--muted)", marginBottom: 24, fontSize: 15 }}>Book us for your next event and let's create an unforgettable night of non-stop disco magic!</p>
                 <a href="#contact" className="neon-btn neon-btn-primary" style={{ width: "100%", justifyContent: "center", marginBottom: 16 }} onClick={e => { e.preventDefault(); scrollTo("contact"); }}>
-                  Book Discoland →
+                  Book Bangers All Time →
                 </a>
                 <div style={{ marginTop: 24, paddingTop: 24, borderTop: "1px solid var(--glass-border)" }}>
                   <p style={{ fontSize: 14, color: "var(--cyan)", textAlign: "center" }}>✦ Making every dance floor a disco inferno ✦</p>
@@ -1219,12 +1218,12 @@ export default function DiscolandWebsite() {
           </div>
           <div className="social-icons reveal">
             {[
-              { icon: "📸", label: "Instagram", href: "#" },
-              { icon: "🎵", label: "TikTok", href: "#" },
+              { icon: "📸", label: "Instagram", href: "https://instagram.com/discoland.music" },
+              { icon: "🎵", label: "Spotify", href: "https://open.spotify.com/playlist/0D65SXdYNzt08vllqbkCA6" },
               { icon: "▶", label: "YouTube", href: "#" },
-              { icon: "🎧", label: "Spotify", href: "#" },
+              { icon: "🎧", label: "TikTok", href: "#" },
             ].map((s, i) => (
-              <a key={i} href={s.href} className="social-icon-btn" target="_blank" rel="noopener noreferrer" onClick={e => e.preventDefault()}>
+              <a key={i} href={s.href} className="social-icon-btn" target="_blank" rel="noopener noreferrer">
                 <span className="social-icon-svg">{s.icon}</span>
                 <span>{s.label}</span>
               </a>
@@ -1268,12 +1267,12 @@ export default function DiscolandWebsite() {
                 <div className="contact-info-value">booking@discoland.nl</div>
               </div>
               <div className="contact-info-item">
-                <div className="contact-info-label">General Inquiries</div>
-                <div className="contact-info-value">hello@discoland.nl</div>
+                <div className="contact-info-label">Follow Us</div>
+                <div className="contact-info-value">@discoland.music</div>
               </div>
               <div className="contact-info-item">
                 <div className="contact-info-label">Based In</div>
-                <div className="contact-info-value">Rotterdam, Netherlands</div>
+                <div className="contact-info-value">Amsterdam, Netherlands</div>
               </div>
               <div style={{ marginTop: 8 }}>
                 <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.7 }}>
@@ -1323,14 +1322,14 @@ export default function DiscolandWebsite() {
       {/* FOOTER */}
       <footer className="footer">
         <div className="container">
-          <div className="footer-logo">BANGERS ALL THE TIME</div>
+          <div className="footer-logo">BANGERS ALL TIME</div>
           <p className="footer-sub">High-energy live disco for events that explode with dance.</p>
           <div className="footer-links">
             {[["hero","Home"],["music","Music"],["videos","Videos"],["tour","Tour"],["gallery","Gallery"],["about","About"],["contact","Contact"]].map(([id,label]) => (
               <a key={id} href="#" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a>
             ))}
           </div>
-          <p className="footer-copy">© 2025 Bangers All The Time · All Rights Reserved · Rotterdam, NL</p>
+          <p className="footer-copy">© 2025 Bangers All The Time · Amsterdam, NL · @discoland.music</p>
         </div>
       </footer>
     </div>
