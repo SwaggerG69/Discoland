@@ -642,7 +642,7 @@ const VIDEOS = [
 
 const TOUR_DATES = [
   { date: "JUN 11", city: "Deventer",           venue: "Wedding",    sold: true,  ticketUrl: null },
-  { date: "JUN 20", city: "Broek op Langedijk", venue: "Broekpop",   sold: false, ticketUrl: null },
+  { date: "JUN 20", city: "Broek in Waterland", venue: "Broekpop",   sold: false, ticketUrl: null },
   { date: "JUL 31", city: "Amsterdam",          venue: "De Kring",   sold: false, ticketUrl: null },
 ];
 // ↑ To add more dates: { date: "AUG 15", city: "Rotterdam", venue: "Venue Name", sold: false, ticketUrl: "https://..." }
