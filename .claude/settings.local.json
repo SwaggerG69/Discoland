@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat /tmp/pr2.json | head -c 300)"
+    ]
+  }
+}

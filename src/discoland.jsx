@@ -11,6 +11,20 @@ import DLPhoto8  from './assets/DLPhoto8.jpeg';
 import DLPhoto9  from './assets/DLPhoto9.jpeg';
 import DLPhoto10 from './assets/DLPhoto10.jpeg';
 
+import audioCarWash         from './assets/Car Wash.mp3';
+import audioBadGirls        from './assets/Bad Girls.mp3';
+import audioDontStartNow    from './assets/Dont Start Now.mp3';
+import audioBoogieNights    from './assets/Boogie Nights.mp3';
+import audioDiscoInferno    from './assets/Disco Inferno.mp3';
+import audioLeFreak         from './assets/Le Freak.mp3';
+import audioMurder          from './assets/Murder On The Dancefloor.mp3';
+import audioVoulezVous      from './assets/Voulez-Vous.mp3';
+import audioBillieJean      from './assets/Billie Jean.mp3';
+import audioAboutDamnTime   from './assets/About Damn Time.mp3';
+import audioHotStuff        from './assets/Hot Stuff.mp3';
+import audioRelightMyFire   from './assets/Relight My Fire.mp3';
+import audioVenus           from './assets/Venus.mp3';
+
 // ── Fonts ──────────────────────────────────────────────────────────────────
 const fontLink = document.createElement("link");
 fontLink.rel = "stylesheet";
@@ -588,36 +602,36 @@ const PLAYLIST_ID = import.meta.env.VITE_SPOTIFY_PLAYLIST_ID || "0D65SXdYNzt08vl
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const TRACKS = [
-  { id:  1, name: "Car Wash",                  artist: "Rose Royce",                      duration: "3:52", emoji: "🚗" },
-  { id:  2, name: "Bad Girls",                 artist: "Donna Summer",                    duration: "4:01", emoji: "💃" },
-  { id:  3, name: "Don't Start Now",           artist: "Dua Lipa",                        duration: "3:03", emoji: "✨" },
-  { id:  4, name: "Get Lucky",                 artist: "Daft Punk ft. Pharrell Williams", duration: "4:08", emoji: "🍀" },
-  { id:  5, name: "Boogie Nights",             artist: "Heatwave",                        duration: "3:45", emoji: "🌙" },
-  { id:  6, name: "Disco Inferno",             artist: "The Trammps",                     duration: "3:39", emoji: "🔥" },
-  { id:  7, name: "Gimme! Gimme! Gimme!",      artist: "ABBA",                            duration: "4:50", emoji: "💫" },
-  { id:  8, name: "Le Freak",                  artist: "CHIC",                            duration: "3:32", emoji: "🎸" },
-  { id:  9, name: "I Will Survive",            artist: "Gloria Gaynor",                   duration: "3:15", emoji: "✊" },
-  { id: 10, name: "Murder On The Dancefloor",  artist: "Sophie Ellis-Bextor",             duration: "3:46", emoji: "🪩" },
-  { id: 11, name: "September",                 artist: "Earth, Wind & Fire",              duration: "3:35", emoji: "🌟" },
-  { id: 12, name: "Uptown Funk",               artist: "Mark Ronson ft. Bruno Mars",      duration: "4:30", emoji: "🔥" },
-  { id: 13, name: "Voulez-Vous",               artist: "ABBA",                            duration: "5:09", emoji: "🌈" },
-  { id: 14, name: "It's Raining Men",          artist: "The Weather Girls",               duration: "4:05", emoji: "⛈️" },
-  { id: 15, name: "Can't Get You Out of My Head", artist: "Kylie Minogue",               duration: "3:49", emoji: "💿" },
-  { id: 16, name: "Billie Jean",               artist: "Michael Jackson",                 duration: "4:54", emoji: "🎩" },
-  { id: 17, name: "Levitating",                artist: "Dua Lipa",                        duration: "3:23", emoji: "🚀" },
-  { id: 18, name: "About Damn Time",           artist: "Lizzo",                           duration: "3:13", emoji: "⏰" },
-  { id: 19, name: "Cosmic Girl",               artist: "Jamiroquai",                      duration: "5:01", emoji: "🌌" },
-  { id: 20, name: "We Are Family",             artist: "Sister Sledge",                   duration: "3:28", emoji: "👨‍👩‍👧‍👦" },
-  { id: 21, name: "Espresso",                  artist: "Sabrina Carpenter",               duration: "2:55", emoji: "☕" },
-  { id: 22, name: "Hot Stuff",                 artist: "Donna Summer",                    duration: "3:48", emoji: "🌶️" },
-  { id: 23, name: "Play That Funky Music",     artist: "Wild Cherry",                     duration: "4:27", emoji: "🎵" },
-  { id: 24, name: "Relight My Fire",           artist: "Dan Hartman",                     duration: "4:11", emoji: "🕯️" },
-  { id: 25, name: "Blue Monday '88",           artist: "New Order",                       duration: "4:46", emoji: "📅" },
-  { id: 26, name: "Canned Heat",               artist: "Jamiroquai",                      duration: "4:37", emoji: "🥫" },
-  { id: 27, name: "In The Dark",               artist: "Purple Disco Machine",            duration: "4:38", emoji: "🔮" },
-  { id: 28, name: "Sing It Back",              artist: "Moloko",                          duration: "7:11", emoji: "🎤" },
-  { id: 29, name: "Venus",                     artist: "Bananarama",                      duration: "3:51", emoji: "♀️" },
-  { id: 30, name: "I Was Made For Lovin' You", artist: "KISS",                            duration: "4:32", emoji: "💋" },
+  { id:  1, name: "Car Wash",                  artist: "Rose Royce",                      duration: "3:52", emoji: "🚗", audio: audioCarWash        },
+  { id:  2, name: "Bad Girls",                 artist: "Donna Summer",                    duration: "4:01", emoji: "💃", audio: audioBadGirls        },
+  { id:  3, name: "Don't Start Now",           artist: "Dua Lipa",                        duration: "3:03", emoji: "✨", audio: audioDontStartNow    },
+  { id:  4, name: "Get Lucky",                 artist: "Daft Punk ft. Pharrell Williams", duration: "4:08", emoji: "🍀", audio: null                  },
+  { id:  5, name: "Boogie Nights",             artist: "Heatwave",                        duration: "3:45", emoji: "🌙", audio: audioBoogieNights    },
+  { id:  6, name: "Disco Inferno",             artist: "The Trammps",                     duration: "3:39", emoji: "🔥", audio: audioDiscoInferno    },
+  { id:  7, name: "Gimme! Gimme! Gimme!",      artist: "ABBA",                            duration: "4:50", emoji: "💫", audio: null                  },
+  { id:  8, name: "Le Freak",                  artist: "CHIC",                            duration: "3:32", emoji: "🎸", audio: audioLeFreak          },
+  { id:  9, name: "I Will Survive",            artist: "Gloria Gaynor",                   duration: "3:15", emoji: "✊", audio: null                  },
+  { id: 10, name: "Murder On The Dancefloor",  artist: "Sophie Ellis-Bextor",             duration: "3:46", emoji: "🪩", audio: audioMurder           },
+  { id: 11, name: "September",                 artist: "Earth, Wind & Fire",              duration: "3:35", emoji: "🌟", audio: null                  },
+  { id: 12, name: "Uptown Funk",               artist: "Mark Ronson ft. Bruno Mars",      duration: "4:30", emoji: "🔥", audio: null                  },
+  { id: 13, name: "Voulez-Vous",               artist: "ABBA",                            duration: "5:09", emoji: "🌈", audio: audioVoulezVous       },
+  { id: 14, name: "It's Raining Men",          artist: "The Weather Girls",               duration: "4:05", emoji: "⛈️", audio: null                 },
+  { id: 15, name: "Can't Get You Out of My Head", artist: "Kylie Minogue",               duration: "3:49", emoji: "💿", audio: null                  },
+  { id: 16, name: "Billie Jean",               artist: "Michael Jackson",                 duration: "4:54", emoji: "🎩", audio: audioBillieJean       },
+  { id: 17, name: "Levitating",                artist: "Dua Lipa",                        duration: "3:23", emoji: "🚀", audio: null                  },
+  { id: 18, name: "About Damn Time",           artist: "Lizzo",                           duration: "3:13", emoji: "⏰", audio: audioAboutDamnTime    },
+  { id: 19, name: "Cosmic Girl",               artist: "Jamiroquai",                      duration: "5:01", emoji: "🌌", audio: null                  },
+  { id: 20, name: "We Are Family",             artist: "Sister Sledge",                   duration: "3:28", emoji: "👨‍👩‍👧‍👦", audio: null             },
+  { id: 21, name: "Espresso",                  artist: "Sabrina Carpenter",               duration: "2:55", emoji: "☕", audio: null                  },
+  { id: 22, name: "Hot Stuff",                 artist: "Donna Summer",                    duration: "3:48", emoji: "🌶️", audio: audioHotStuff         },
+  { id: 23, name: "Play That Funky Music",     artist: "Wild Cherry",                     duration: "4:27", emoji: "🎵", audio: null                  },
+  { id: 24, name: "Relight My Fire",           artist: "Dan Hartman",                     duration: "4:11", emoji: "🕯️", audio: audioRelightMyFire    },
+  { id: 25, name: "Blue Monday '88",           artist: "New Order",                       duration: "4:46", emoji: "📅", audio: null                  },
+  { id: 26, name: "Canned Heat",               artist: "Jamiroquai",                      duration: "4:37", emoji: "🥫", audio: null                  },
+  { id: 27, name: "In The Dark",               artist: "Purple Disco Machine",            duration: "4:38", emoji: "🔮", audio: null                  },
+  { id: 28, name: "Sing It Back",              artist: "Moloko",                          duration: "7:11", emoji: "🎤", audio: null                  },
+  { id: 29, name: "Venus",                     artist: "Bananarama",                      duration: "3:51", emoji: "♀️", audio: audioVenus            },
+  { id: 30, name: "I Was Made For Lovin' You", artist: "KISS",                            duration: "4:32", emoji: "💋", audio: null                  },
 ];
 
 const VIDEOS = [
@@ -686,12 +700,14 @@ export default function DiscolandWebsite() {
   const [navOpen,      setNavOpen]      = useState(false);
   const [activeTrack,  setActiveTrack]  = useState(1);
   const [playing,      setPlaying]      = useState(false);
-  const [progress,     setProgress]     = useState(28);
+  const [progress,     setProgress]     = useState(0);
+  const [currentTime,  setCurrentTime]  = useState(0);
   const [videoModal,   setVideoModal]   = useState(null);
   const [lightbox,     setLightbox]     = useState(null);
   const [contactForm,  setContactForm]  = useState({ name: "", email: "", message: "" });
   const [formSent,     setFormSent]     = useState(false);
   const [newsletter,   setNewsletter]   = useState("");
+  const audioRef = useRef(null);
   useScrollReveal();
 
   useEffect(() => {
@@ -700,13 +716,34 @@ export default function DiscolandWebsite() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  useEffect(() => {
-    if (!playing) return;
-    const id = setInterval(() => setProgress(p => p >= 100 ? 0 : p + 0.2), 100);
-    return () => clearInterval(id);
-  }, [playing]);
-
   const track = TRACKS.find(t => t.id === activeTrack);
+
+  const fmtTime = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+  const playTrack = (id) => {
+    const t = TRACKS.find(tr => tr.id === id);
+    setActiveTrack(id);
+    setProgress(0);
+    setCurrentTime(0);
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (t?.audio) {
+      audio.src = t.audio;
+      audio.load();
+      audio.play().catch(() => {});
+      setPlaying(true);
+    } else {
+      audio.src = '';
+      setPlaying(false);
+    }
+  };
+
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio || !track?.audio) return;
+    if (playing) { audio.pause(); setPlaying(false); }
+    else { audio.play().catch(() => {}); setPlaying(true); }
+  };
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -791,7 +828,7 @@ export default function DiscolandWebsite() {
                 <div
                   key={t.id}
                   className={`track-item${activeTrack === t.id ? " active" : ""}`}
-                  onClick={() => { setActiveTrack(t.id); setPlaying(true); setProgress(0); }}
+                  onClick={() => playTrack(t.id)}
                 >
                   <div className="track-num">
                     {activeTrack === t.id && playing
@@ -819,21 +856,24 @@ export default function DiscolandWebsite() {
               <div>
                 <div className="progress-bar" onClick={e => {
                   const rect = e.currentTarget.getBoundingClientRect();
-                  setProgress(((e.clientX - rect.left) / rect.width) * 100);
+                  const pct = ((e.clientX - rect.left) / rect.width) * 100;
+                  setProgress(pct);
+                  const audio = audioRef.current;
+                  if (audio && audio.duration) audio.currentTime = (pct / 100) * audio.duration;
                 }}>
                   <div className="progress-fill" style={{ width: `${progress}%` }} />
                 </div>
                 <div style={{ display:"flex", justifyContent:"space-between", marginTop:8, fontSize:11, color:"var(--muted)", fontFamily:"Syncopate" }}>
-                  <span>{Math.floor(progress * 0.035)}:{String(Math.floor((progress * 0.035 % 1) * 60)).padStart(2,"0")}</span>
+                  <span>{fmtTime(currentTime)}</span>
                   <span>{track?.duration}</span>
                 </div>
               </div>
               <div className="player-controls">
-                <button className="ctrl-btn" onClick={() => setActiveTrack(t => t > 1 ? t - 1 : TRACKS.length)}>⏮</button>
-                <button className="ctrl-btn play" onClick={() => setPlaying(p => !p)}>
+                <button className="ctrl-btn" onClick={() => playTrack(activeTrack > 1 ? activeTrack - 1 : TRACKS.length)}>⏮</button>
+                <button className="ctrl-btn play" onClick={togglePlay}>
                   {playing ? "⏸" : "▶"}
                 </button>
-                <button className="ctrl-btn" onClick={() => setActiveTrack(t => t < TRACKS.length ? t + 1 : 1)}>⏭</button>
+                <button className="ctrl-btn" onClick={() => playTrack(activeTrack < TRACKS.length ? activeTrack + 1 : 1)}>⏭</button>
               </div>
               <div className="streaming-links">
                 <a
@@ -1130,6 +1170,19 @@ export default function DiscolandWebsite() {
           </div>
         </div>
       </section>
+
+      {/* ── AUDIO ENGINE ── */}
+      <audio
+        ref={audioRef}
+        onTimeUpdate={() => {
+          const a = audioRef.current;
+          if (a && a.duration) {
+            setCurrentTime(a.currentTime);
+            setProgress((a.currentTime / a.duration) * 100);
+          }
+        }}
+        onEnded={() => playTrack(activeTrack < TRACKS.length ? activeTrack + 1 : 1)}
+      />
 
       {/* ── FOOTER ── */}
       <footer className="footer">
