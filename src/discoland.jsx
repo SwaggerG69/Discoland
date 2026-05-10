@@ -659,7 +659,10 @@ const TRACKS = [
   { id: 27, name: "In The Dark",               artist: "Purple Disco Machine",            duration: "4:38", emoji: "🔮", audio: null                  },
   { id: 28, name: "Sing It Back",              artist: "Moloko",                          duration: "7:11", emoji: "🎤", audio: null                  },
   { id: 29, name: "Venus",                     artist: "Bananarama",                      duration: "3:51", emoji: "♀️", audio: audioVenus            },
-  { id: 30, name: "I Was Made For Lovin' You", artist: "KISS",                            duration: "4:32", emoji: "💋", audio: null                  },
+  { id: 30, name: "I Was Made For Lovin' You", artist: "KISS",                            duration: "4:32", emoji: "💋", audio: null },
+  { id: 31, name: "I Wanna Be Your Lover",     artist: "Prince",                           duration: "3:56", emoji: "🎸", audio: null },
+  { id: 32, name: "Funkytown",                 artist: "Lipps Inc.",                       duration: "3:47", emoji: "🏙️", audio: null },
+  { id: 33, name: "Stayin' Alive",             artist: "Bee Gees",                         duration: "4:45", emoji: "🕺", audio: null },
 ];
 
 const VIDEOS = [
