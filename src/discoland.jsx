@@ -282,39 +282,32 @@ globalStyle.textContent = `
   .track-list::-webkit-scrollbar-track { background: transparent; }
   .track-list::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 2px; }
 
-  .hero-logo-wrap {
-    position: relative; width: 220px; height: 220px;
-    margin: 0 auto 36px;
-    display: flex; align-items: center; justify-content: center;
+  .hero-logo {
+    width: 220px; height: auto; margin-bottom: 36px;
+    filter: drop-shadow(0 0 24px rgba(255,45,120,0.8)) drop-shadow(0 0 48px rgba(255,215,0,0.25));
     animation: float 4s ease-in-out infinite, fadeUp 0.5s ease both;
   }
-  .hero-logo-disc {
-    position: absolute; inset: 0; border-radius: 50%;
-    background: conic-gradient(from 0deg, var(--purple), var(--pink), var(--gold), var(--cyan), var(--purple));
-    animation: spin-slow 6s linear infinite;
-    opacity: 0.7; filter: blur(18px);
-  }
-  .hero-logo-ring {
-    position: absolute; inset: 8px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: radial-gradient(circle at 35% 35%,
-      rgba(255,255,255,0.12) 0%, rgba(155,48,255,0.15) 40%, rgba(8,8,16,0.7) 100%);
-    backdrop-filter: blur(4px);
-  }
-  .hero-logo {
-    position: relative; z-index: 1;
-    width: 160px; height: auto;
-    filter: drop-shadow(0 0 20px rgba(255,45,120,0.9)) drop-shadow(0 0 40px rgba(255,215,0,0.3));
-  }
 
-  .lang-toggle { display: flex; gap: 6px; align-items: center; margin-left: 16px; }
+  .lang-toggle { display: flex; gap: 8px; align-items: center; }
   .lang-btn {
-    background: none; border: 1px solid transparent; cursor: pointer;
-    font-size: 22px; opacity: 0.4; transition: all 0.2s;
-    padding: 3px 6px; border-radius: 6px; line-height: 1;
+    width: 42px; height: 28px; border-radius: 4px; padding: 0;
+    border: 2px solid transparent; cursor: pointer; opacity: 0.5;
+    transition: all 0.2s; background-size: cover; background-position: center;
+    overflow: hidden; flex-shrink: 0;
   }
-  .lang-btn.active { opacity: 1; border-color: rgba(255,215,0,0.4); filter: drop-shadow(0 0 6px rgba(255,215,0,0.5)); }
-  .lang-btn:hover:not(.active) { opacity: 0.7; }
+  .lang-btn.active  { opacity: 1; border-color: var(--gold); box-shadow: 0 0 10px rgba(255,215,0,0.5); }
+  .lang-btn:hover:not(.active) { opacity: 0.8; }
+  .lang-btn-en {
+    background-color: #012169;
+    background-image:
+      linear-gradient(to bottom, transparent 39%, #fff 39% 61%, transparent 61%),
+      linear-gradient(to right,  transparent 39%, #fff 39% 61%, transparent 61%),
+      linear-gradient(to bottom, transparent 42%, #C8102E 42% 58%, transparent 58%),
+      linear-gradient(to right,  transparent 42%, #C8102E 42% 58%, transparent 58%);
+  }
+  .lang-btn-nl {
+    background: linear-gradient(to bottom, #AE1C28 33.33%, #fff 33.33% 66.66%, #21468B 66.66%);
+  }
   .track-item {
     display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 12px;
     background: var(--glass); border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.3s ease;
@@ -672,9 +665,9 @@ const VIDEOS = [
 ];
 
 const TOUR_DATES = [
-  { date: "JUN 11", city: "Deventer",           venue: "Wedding",    sold: true,  ticketUrl: null },
-  { date: "JUN 20", city: "Broek in Waterland", venue: "Broekpop",   sold: false, ticketUrl: null },
-  { date: "JUL 31", city: "Amsterdam",          venue: "De Kring",   sold: false, ticketUrl: null },
+  { date: "JUN 11", city: "Deventer",           venue: "Wedding",    sold: true,  private: true,  ticketUrl: null },
+  { date: "JUN 20", city: "Broek op Langedijk", venue: "Broekpop",   sold: false, private: false, ticketUrl: "https://instagram.com/discoland.music" },
+  { date: "JUL 31", city: "Amsterdam",          venue: "De Kring",   sold: false, private: false, ticketUrl: "https://instagram.com/discoland.music" },
 ];
 // ↑ To add more dates: { date: "AUG 15", city: "Rotterdam", venue: "Venue Name", sold: false, ticketUrl: "https://..." }
 
@@ -735,7 +728,7 @@ const TRANSLATIONS = {
     tickerExtra:"LIVE DISCO COVERS ✦ DANCE FLOOR EXPLOSION ✦ BOOK US FOR YOUR EVENT ✦",
     musicLabel:"Setlist", musicTitle:"The Music", musicPlaylist:"Full Playlist",
     videosLabel:"Visual", videosTitle:"Videos",
-    tourLabel:"Live", tourTitle:"Upcoming Dates", tourTickets:"Tickets →", tourSoldOut:"Sold Out",
+    tourLabel:"Live", tourTitle:"Upcoming Shows", tourTickets:"Tickets →", tourSoldOut:"Sold Out", tourPrivate:"Private",
     galleryLabel:"Photos", galleryTitle:"Gallery",
     reviewsLabel:"Reviews", reviewsTitle:"What They Say",
     aboutLabel:"The Band", aboutTitle:"About",
@@ -773,7 +766,7 @@ const TRANSLATIONS = {
     tickerExtra:"LIVE DISCO COVERS ✦ DANSVLOER EXPLOSIE ✦ BOEK ONS VOOR UW EVENEMENT ✦",
     musicLabel:"Setlist", musicTitle:"De Muziek", musicPlaylist:"Volledige Playlist",
     videosLabel:"Visueel", videosTitle:"Video's",
-    tourLabel:"Live", tourTitle:"Aankomende Data", tourTickets:"Tickets →", tourSoldOut:"Uitverkocht",
+    tourLabel:"Live", tourTitle:"Aankomende Shows", tourTickets:"Tickets →", tourSoldOut:"Uitverkocht", tourPrivate:"Besloten",
     galleryLabel:"Foto's", galleryTitle:"Galerij",
     reviewsLabel:"Recensies", reviewsTitle:"Wat Ze Zeggen",
     aboutLabel:"De Band", aboutTitle:"Over Ons",
@@ -880,8 +873,8 @@ export default function DiscolandWebsite() {
           </ul>
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
             <div className="lang-toggle">
-              <button className={`lang-btn${lang==="en"?" active":""}`} onClick={() => setLang("en")} title="English">🇬🇧</button>
-              <button className={`lang-btn${lang==="nl"?" active":""}`} onClick={() => setLang("nl")} title="Nederlands">🇳🇱</button>
+              <button className={`lang-btn lang-btn-en${lang==="en"?" active":""}`} onClick={() => setLang("en")} title="English" />
+              <button className={`lang-btn lang-btn-nl${lang==="nl"?" active":""}`} onClick={() => setLang("nl")} title="Nederlands" />
             </div>
             <button className="nav-mobile-toggle" onClick={() => setNavOpen(o => !o)}>
               {navOpen ? "✕" : "☰"}
@@ -897,11 +890,7 @@ export default function DiscolandWebsite() {
         <div className="disco-ball" />
         <div className="scan-line" />
         <div className="hero-content">
-          <div className="hero-logo-wrap">
-            <div className="hero-logo-disc" />
-            <div className="hero-logo-ring" />
-            <img src={logo} alt="Discoland" className="hero-logo" />
-          </div>
+          <img src={logo} alt="Discoland" className="hero-logo" />
           <div className="hero-eyebrow">{T.heroEyebrow}</div>
           <h1 className="hero-title">DISCOLAND</h1>
           <p className="hero-tagline">
@@ -1083,13 +1072,13 @@ export default function DiscolandWebsite() {
                 <div><div className="tour-city">{show.city}</div></div>
                 <div className="tour-venue">{show.venue}</div>
                 <a
-                  href={show.ticketUrl || "#"}
-                  target={show.ticketUrl ? "_blank" : undefined}
+                  href={show.private ? "#" : (show.ticketUrl || "#")}
+                  target={(!show.private && show.ticketUrl) ? "_blank" : undefined}
                   rel="noopener noreferrer"
-                  className={`tour-btn${show.sold ? " sold-out" : ""}`}
-                  onClick={e => { if (!show.ticketUrl) e.preventDefault(); }}
+                  className={`tour-btn${show.private ? " sold-out" : ""}`}
+                  onClick={e => { if (show.private || !show.ticketUrl) e.preventDefault(); }}
                 >
-                  {show.sold ? T.tourSoldOut : T.tourTickets}
+                  {show.private ? T.tourPrivate : T.tourTickets}
                 </a>
               </div>
             ))}
