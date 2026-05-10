@@ -282,11 +282,39 @@ globalStyle.textContent = `
   .track-list::-webkit-scrollbar-track { background: transparent; }
   .track-list::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 2px; }
 
-  .hero-logo {
-    width: 160px; height: auto; margin-bottom: 28px;
-    filter: drop-shadow(0 0 24px rgba(255,45,120,0.7));
+  .hero-logo-wrap {
+    position: relative; width: 220px; height: 220px;
+    margin: 0 auto 36px;
+    display: flex; align-items: center; justify-content: center;
     animation: float 4s ease-in-out infinite, fadeUp 0.5s ease both;
   }
+  .hero-logo-disc {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--purple), var(--pink), var(--gold), var(--cyan), var(--purple));
+    animation: spin-slow 6s linear infinite;
+    opacity: 0.7; filter: blur(18px);
+  }
+  .hero-logo-ring {
+    position: absolute; inset: 8px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: radial-gradient(circle at 35% 35%,
+      rgba(255,255,255,0.12) 0%, rgba(155,48,255,0.15) 40%, rgba(8,8,16,0.7) 100%);
+    backdrop-filter: blur(4px);
+  }
+  .hero-logo {
+    position: relative; z-index: 1;
+    width: 160px; height: auto;
+    filter: drop-shadow(0 0 20px rgba(255,45,120,0.9)) drop-shadow(0 0 40px rgba(255,215,0,0.3));
+  }
+
+  .lang-toggle { display: flex; gap: 6px; align-items: center; margin-left: 16px; }
+  .lang-btn {
+    background: none; border: 1px solid transparent; cursor: pointer;
+    font-size: 22px; opacity: 0.4; transition: all 0.2s;
+    padding: 3px 6px; border-radius: 6px; line-height: 1;
+  }
+  .lang-btn.active { opacity: 1; border-color: rgba(255,215,0,0.4); filter: drop-shadow(0 0 6px rgba(255,215,0,0.5)); }
+  .lang-btn:hover:not(.active) { opacity: 0.7; }
   .track-item {
     display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 12px;
     background: var(--glass); border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.3s ease;
@@ -694,6 +722,86 @@ function useScrollReveal() {
   });
 }
 
+// ── Translations ─────────────────────────────────────────────────────────────
+const TRANSLATIONS = {
+  en: {
+    navMusic:"Music", navVideos:"Videos", navTour:"Tour", navGallery:"Gallery", navAbout:"About", navContact:"Contact",
+    heroEyebrow:"Amsterdam · High-Energy Disco · Live",
+    heroTagline:"where the dance floor explodes with non-stop disco magic",
+    heroCta1:"Hear Our Setlist", heroCta2:"Watch Videos", heroCta3:"Book Us",
+    tickerExtra:"LIVE DISCO COVERS ✦ DANCE FLOOR EXPLOSION ✦ BOOK US FOR YOUR EVENT ✦",
+    musicLabel:"Setlist", musicTitle:"The Music", musicPlaylist:"Full Playlist",
+    videosLabel:"Visual", videosTitle:"Videos",
+    tourLabel:"Live", tourTitle:"Upcoming Dates", tourTickets:"Tickets →", tourSoldOut:"Sold Out",
+    galleryLabel:"Photos", galleryTitle:"Gallery",
+    reviewsLabel:"Reviews", reviewsTitle:"What They Say",
+    aboutLabel:"The Band", aboutTitle:"About",
+    aboutBio1:"High-energy party disco band for all your dancing needs. Based in Amsterdam, we are Discoland — an international live disco band ready to make your event unforgettable.",
+    aboutBio2:"Are you ready to go all out and make the dance floor explode? Look no further! We play all the bangers — from disco classics by Donna Summer and Chic to modern hits by Dua Lipa, all played and sung live.",
+    aboutBoxTitle:"✦ What We Bring to the Party ✦",
+    aboutItem1T:"Live Disco Power:", aboutItem1:"Everything is played and sung live! Drums, bass, keyboards, guitar and two amazing vocalists — a guaranteed dance floor explosion!",
+    aboutItem2T:"Non-stop Bangers:", aboutItem2:"Two sets of disco deliciousness, each lasting about 45 minutes. We can also partner with a DJ to keep the party going all night.",
+    aboutItem3T:"Full Disco Experience:", aboutItem3:"We take care of everything: sound, lights (disco balls!) and an experienced technician. All you have to do is come and dance!",
+    aboutBio3:"Make your party an unforgettable disco experience, whether it's a wedding, birthday, or any event.",
+    aboutCardTitle:"READY TO PARTY?",
+    aboutCardSub:"Book us for your next event and let's create an unforgettable night of non-stop disco magic.",
+    aboutCardBtn:"Book Discoland →", aboutCardTag:"✦ Making every dance floor a disco inferno ✦",
+    socialLabel:"Follow Along", socialTitle:"Stay Connected", socialSub:"Join our universe across every platform",
+    newsletterTitle:"JOIN THE INNER CIRCLE",
+    newsletterSub:"First access to bookings, exclusive content, and behind-the-scenes passes.",
+    newsletterPh:"your@email.com", newsletterBtn:"Subscribe",
+    contactLabel:"Get In Touch", contactTitle:"Contact",
+    contactBookingsLabel:"Bookings & Management", contactIgLabel:"Instagram",
+    contactBasedLabel:"Based In", contactBasedValue:"Amsterdam, Netherlands",
+    contactInfo:"For booking enquiries please include your proposed dates, event type, venue capacity, and details. We typically respond within 24–48 hours.",
+    contactNamePh:"Your Name", contactEmailPh:"Your Email", contactMsgPh:"Tell us about your event...",
+    contactSendBtn:"Send Message →",
+    contactSuccess:"✦ MESSAGE RECEIVED · WE'LL BE IN TOUCH SOON ✦",
+    footerSub:"High-energy live disco for events that explode with dance.",
+    footerCopy:"© 2025 Discoland · Amsterdam, NL · @discoland.music",
+    footerHome:"Home", footerMusic:"Music", footerVideos:"Videos", footerTour:"Tour",
+    footerGallery:"Gallery", footerAbout:"About", footerContact:"Contact",
+  },
+  nl: {
+    navMusic:"Muziek", navVideos:"Video's", navTour:"Tour", navGallery:"Galerij", navAbout:"Over Ons", navContact:"Contact",
+    heroEyebrow:"Amsterdam · High-Energy Disco · Live",
+    heroTagline:"waar de dansvloer explodeert met non-stop discomagie",
+    heroCta1:"Beluister Onze Setlist", heroCta2:"Bekijk Video's", heroCta3:"Boek Ons",
+    tickerExtra:"LIVE DISCO COVERS ✦ DANSVLOER EXPLOSIE ✦ BOEK ONS VOOR UW EVENEMENT ✦",
+    musicLabel:"Setlist", musicTitle:"De Muziek", musicPlaylist:"Volledige Playlist",
+    videosLabel:"Visueel", videosTitle:"Video's",
+    tourLabel:"Live", tourTitle:"Aankomende Data", tourTickets:"Tickets →", tourSoldOut:"Uitverkocht",
+    galleryLabel:"Foto's", galleryTitle:"Galerij",
+    reviewsLabel:"Recensies", reviewsTitle:"Wat Ze Zeggen",
+    aboutLabel:"De Band", aboutTitle:"Over Ons",
+    aboutBio1:"Een energieke feest-discoband voor al uw dansnoden. Gevestigd in Amsterdam zijn wij Discoland — een internationale live-discoband die van uw evenement een onvergetelijke ervaring maakt.",
+    aboutBio2:"Klaar om er helemaal voor te gaan en de dansvloer te laten exploderen? Zoek niet verder! Wij spelen alle hits — van discoklassiekers van Donna Summer en Chic tot moderne hits van Dua Lipa, allemaal live gespeeld en gezongen.",
+    aboutBoxTitle:"✦ Wat Wij Meebrengen naar het Feest ✦",
+    aboutItem1T:"Live Disco Power:", aboutItem1:"Alles wordt live gespeeld en gezongen! Drums, bas, keyboard, gitaar en twee geweldige zangeressen — een gegarandeerde dansvloerexplosie!",
+    aboutItem2T:"Non-stop Bangers:", aboutItem2:"Twee sets disco-heerlijkheid, elk circa 45 minuten. We kunnen ook samenwerken met een dj om het feest de hele nacht gaande te houden.",
+    aboutItem3T:"Volledige Disco-ervaring:", aboutItem3:"Wij regelen alles: geluid, lichten (discoballen!) en een ervaren technicus. U hoeft alleen maar te komen dansen!",
+    aboutBio3:"Maak van uw feest een onvergetelijke disco-ervaring, of het nu een bruiloft, verjaardag of een ander evenement is.",
+    aboutCardTitle:"KLAAR VOOR HET FEEST?",
+    aboutCardSub:"Boek ons voor uw volgende evenement en laten we samen een onvergetelijke avond vol non-stop discomagie creëren.",
+    aboutCardBtn:"Boek Discoland →", aboutCardTag:"✦ Van elke dansvloer een disco-inferno ✦",
+    socialLabel:"Volg Ons", socialTitle:"Blijf Verbonden", socialSub:"Sluit je aan bij ons universum op elk platform",
+    newsletterTitle:"WORD LID VAN DE INNER CIRCLE",
+    newsletterSub:"Eerste toegang tot boekingen, exclusieve content en backstage-passen.",
+    newsletterPh:"jouw@email.com", newsletterBtn:"Inschrijven",
+    contactLabel:"Neem Contact Op", contactTitle:"Contact",
+    contactBookingsLabel:"Boekingen & Management", contactIgLabel:"Instagram",
+    contactBasedLabel:"Gevestigd In", contactBasedValue:"Amsterdam, Nederland",
+    contactInfo:"Vermeld bij boekingsaanvragen uw gewenste data, type evenement, zaalbezetting en details. Wij reageren doorgaans binnen 24–48 uur.",
+    contactNamePh:"Uw Naam", contactEmailPh:"Uw E-mailadres", contactMsgPh:"Vertel ons over uw evenement...",
+    contactSendBtn:"Verstuur Bericht →",
+    contactSuccess:"✦ BERICHT ONTVANGEN · WE NEMEN SNEL CONTACT MET U OP ✦",
+    footerSub:"Energieke live-disco voor evenementen die van de dansvloer een feest maken.",
+    footerCopy:"© 2025 Discoland · Amsterdam, NL · @discoland.music",
+    footerHome:"Home", footerMusic:"Muziek", footerVideos:"Video's", footerTour:"Tour",
+    footerGallery:"Galerij", footerAbout:"Over Ons", footerContact:"Contact",
+  },
+};
+
 // ── App ───────────────────────────────────────────────────────────────────────
 export default function DiscolandWebsite() {
   const [navScrolled,  setNavScrolled]  = useState(false);
@@ -707,7 +815,9 @@ export default function DiscolandWebsite() {
   const [contactForm,  setContactForm]  = useState({ name: "", email: "", message: "" });
   const [formSent,     setFormSent]     = useState(false);
   const [newsletter,   setNewsletter]   = useState("");
+  const [lang,         setLang]         = useState("en");
   const audioRef = useRef(null);
+  const T = TRANSLATIONS[lang];
   useScrollReveal();
 
   useEffect(() => {
@@ -761,13 +871,19 @@ export default function DiscolandWebsite() {
             <span className="nav-logo-text">DISCOLAND</span>
           </div>
           <ul className={`nav-links${navOpen ? " open" : ""}`}>
-            {[["music","Music"],["videos","Videos"],["tour","Tour"],["gallery","Gallery"],["about","About"],["contact","Contact"]].map(([id, label]) => (
+            {[["music",T.navMusic],["videos",T.navVideos],["tour",T.navTour],["gallery",T.navGallery],["about",T.navAbout],["contact",T.navContact]].map(([id, label]) => (
               <li key={id}><a href="#" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a></li>
             ))}
           </ul>
-          <button className="nav-mobile-toggle" onClick={() => setNavOpen(o => !o)}>
-            {navOpen ? "✕" : "☰"}
-          </button>
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <div className="lang-toggle">
+              <button className={`lang-btn${lang==="en"?" active":""}`} onClick={() => setLang("en")} title="English">🇬🇧</button>
+              <button className={`lang-btn${lang==="nl"?" active":""}`} onClick={() => setLang("nl")} title="Nederlands">🇳🇱</button>
+            </div>
+            <button className="nav-mobile-toggle" onClick={() => setNavOpen(o => !o)}>
+              {navOpen ? "✕" : "☰"}
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -778,21 +894,25 @@ export default function DiscolandWebsite() {
         <div className="disco-ball" />
         <div className="scan-line" />
         <div className="hero-content">
-          <img src={logo} alt="Discoland" className="hero-logo" />
-          <div className="hero-eyebrow">Amsterdam · High-Energy Disco · Live</div>
+          <div className="hero-logo-wrap">
+            <div className="hero-logo-disc" />
+            <div className="hero-logo-ring" />
+            <img src={logo} alt="Discoland" className="hero-logo" />
+          </div>
+          <div className="hero-eyebrow">{T.heroEyebrow}</div>
           <h1 className="hero-title">DISCOLAND</h1>
           <p className="hero-tagline">
-            <span>Bangers All The Time</span> — where the dance floor explodes with non-stop disco magic
+            <span>Bangers All The Time</span> — {T.heroTagline}
           </p>
           <div className="hero-ctas">
             <a href="#" className="neon-btn neon-btn-primary" onClick={e => { e.preventDefault(); scrollTo("music"); }}>
-              ▶ Hear Our Setlist
+              ▶ {T.heroCta1}
             </a>
             <a href="#" className="neon-btn neon-btn-outline" onClick={e => { e.preventDefault(); scrollTo("videos"); }}>
-              ◉ Watch Videos
+              ◉ {T.heroCta2}
             </a>
             <a href="#" className="neon-btn neon-btn-outline" onClick={e => { e.preventDefault(); scrollTo("contact"); }}>
-              ◈ Book Us
+              ◈ {T.heroCta3}
             </a>
           </div>
         </div>
@@ -807,7 +927,7 @@ export default function DiscolandWebsite() {
         <div className="ticker-inner">
           {[...Array(6)].map((_, i) => (
             <span key={i} className="ticker-text">
-              DISCOLAND <span className="ticker-dot">✦</span> BANGERS ALL THE TIME <span className="ticker-dot">✦</span> LIVE DISCO COVERS <span className="ticker-dot">✦</span> DANCE FLOOR EXPLOSION <span className="ticker-dot">✦</span> BOOK US FOR YOUR EVENT <span className="ticker-dot">✦</span>
+              DISCOLAND <span className="ticker-dot">✦</span> BANGERS ALL THE TIME <span className="ticker-dot">✦</span> {T.tickerExtra}
             </span>
           ))}
         </div>
@@ -817,8 +937,8 @@ export default function DiscolandWebsite() {
       <section id="music">
         <div className="container">
           <div className="reveal">
-            <div className="section-label">Setlist</div>
-            <h2 className="section-title">The Music</h2>
+            <div className="section-label">{T.musicLabel}</div>
+            <h2 className="section-title">{T.musicTitle}</h2>
           </div>
 
           <div className="music-grid reveal">
@@ -881,7 +1001,7 @@ export default function DiscolandWebsite() {
                   target="_blank" rel="noopener noreferrer"
                   className="stream-btn"
                 >
-                  🎵 Full Playlist
+                  🎵 {T.musicPlaylist}
                 </a>
                 <a href="https://instagram.com/discoland.music" target="_blank" rel="noopener noreferrer" className="stream-btn">
                   📸 Instagram
@@ -908,8 +1028,8 @@ export default function DiscolandWebsite() {
       <section id="videos" className="videos-section">
         <div className="container">
           <div className="reveal">
-            <div className="section-label">Visual</div>
-            <h2 className="section-title">Videos</h2>
+            <div className="section-label">{T.videosLabel}</div>
+            <h2 className="section-title">{T.videosTitle}</h2>
           </div>
           <div className="video-grid">
             {VIDEOS.map(v => (
@@ -950,8 +1070,8 @@ export default function DiscolandWebsite() {
       <section id="tour">
         <div className="container">
           <div className="reveal">
-            <div className="section-label">Live</div>
-            <h2 className="section-title">Upcoming Dates</h2>
+            <div className="section-label">{T.tourLabel}</div>
+            <h2 className="section-title">{T.tourTitle}</h2>
           </div>
           <div className="tour-table">
             {TOUR_DATES.map((show, i) => (
@@ -966,7 +1086,7 @@ export default function DiscolandWebsite() {
                   className={`tour-btn${show.sold ? " sold-out" : ""}`}
                   onClick={e => { if (!show.ticketUrl) e.preventDefault(); }}
                 >
-                  {show.sold ? "Sold Out" : "Tickets →"}
+                  {show.sold ? T.tourSoldOut : T.tourTickets}
                 </a>
               </div>
             ))}
@@ -978,8 +1098,8 @@ export default function DiscolandWebsite() {
       <section id="gallery" className="gallery-section">
         <div className="container">
           <div className="reveal">
-            <div className="section-label">Photos</div>
-            <h2 className="section-title">Gallery</h2>
+            <div className="section-label">{T.galleryLabel}</div>
+            <h2 className="section-title">{T.galleryTitle}</h2>
           </div>
           <div className="gallery-grid reveal">
             {GALLERY_ITEMS.map((item, i) => (
@@ -1009,8 +1129,8 @@ export default function DiscolandWebsite() {
       <section className="reviews-section">
         <div className="container">
           <div className="reveal">
-            <div className="section-label">Reviews</div>
-            <h2 className="section-title">What They Say</h2>
+            <div className="section-label">{T.reviewsLabel}</div>
+            <h2 className="section-title">{T.reviewsTitle}</h2>
           </div>
         </div>
         <div style={{ paddingLeft: 24 }}>
@@ -1032,37 +1152,31 @@ export default function DiscolandWebsite() {
       <section id="about" className="about-section">
         <div className="container">
           <div className="reveal">
-            <div className="section-label">The Band</div>
-            <h2 className="section-title">About</h2>
+            <div className="section-label">{T.aboutLabel}</div>
+            <h2 className="section-title">{T.aboutTitle}</h2>
           </div>
           <div className="about-grid">
             <div className="about-bio reveal">
-              <p>
-                <strong>High-energy party disco band for all your dancing needs.</strong> Based in <strong>Amsterdam</strong>, we are <strong>Discoland</strong> — an international live disco band ready to make your event unforgettable.
-              </p>
-              <p>
-                Are you ready to go all out and make the dance floor explode? Look no further! We play all the bangers — from disco classics by Donna Summer and Chic to modern hits by Dua Lipa, all played and sung live.
-              </p>
+              <p><strong>{T.aboutBio1}</strong></p>
+              <p>{T.aboutBio2}</p>
               <div className="about-highlight-box">
-                <p style={{ fontWeight:600, color:"var(--pink)", marginBottom:8 }}>✦ What We Bring to the Party ✦</p>
+                <p style={{ fontWeight:600, color:"var(--pink)", marginBottom:8 }}>{T.aboutBoxTitle}</p>
                 <ul>
-                  <li><strong>Live Disco Power:</strong> Everything is played and sung live! Drums, bass, keyboards, guitar and two amazing vocalists — a guaranteed dance floor explosion!</li>
-                  <li><strong>Non-stop Bangers:</strong> Two sets of disco deliciousness, each lasting about 45 minutes. We can also partner with a DJ to keep the party going all night.</li>
-                  <li><strong>Full Disco Experience:</strong> We take care of everything: sound, lights (disco balls!) and an experienced technician. All you have to do is come and dance!</li>
+                  <li><strong>{T.aboutItem1T}</strong> {T.aboutItem1}</li>
+                  <li><strong>{T.aboutItem2T}</strong> {T.aboutItem2}</li>
+                  <li><strong>{T.aboutItem3T}</strong> {T.aboutItem3}</li>
                 </ul>
               </div>
-              <p style={{ marginTop:20 }}>
-                Make your party an unforgettable disco experience, whether it's a wedding, birthday, or any event.
-              </p>
+              <p style={{ marginTop:20 }}>{T.aboutBio3}</p>
             </div>
             <div className="reveal">
               <div className="glass-card" style={{ padding:32 }}>
                 <div style={{ fontSize:64, textAlign:"center", marginBottom:24 }}>🪩</div>
                 <h3 style={{ textAlign:"center", color:"var(--pink)", marginBottom:16, fontFamily:"Bebas Neue", fontSize:28 }}>
-                  READY TO PARTY?
+                  {T.aboutCardTitle}
                 </h3>
                 <p style={{ textAlign:"center", color:"var(--muted)", marginBottom:24, fontSize:15 }}>
-                  Book us for your next event and let's create an unforgettable night of non-stop disco magic.
+                  {T.aboutCardSub}
                 </p>
                 <a
                   href="#"
@@ -1070,12 +1184,10 @@ export default function DiscolandWebsite() {
                   style={{ width:"100%", justifyContent:"center", marginBottom:16 }}
                   onClick={e => { e.preventDefault(); scrollTo("contact"); }}
                 >
-                  Book Discoland →
+                  {T.aboutCardBtn}
                 </a>
                 <div style={{ marginTop:24, paddingTop:24, borderTop:"1px solid var(--glass-border)" }}>
-                  <p style={{ fontSize:14, color:"var(--cyan)", textAlign:"center" }}>
-                    ✦ Making every dance floor a disco inferno ✦
-                  </p>
+                  <p style={{ fontSize:14, color:"var(--cyan)", textAlign:"center" }}>{T.aboutCardTag}</p>
                 </div>
               </div>
             </div>
@@ -1087,9 +1199,9 @@ export default function DiscolandWebsite() {
       <section className="social-section">
         <div className="container">
           <div className="reveal">
-            <div className="section-label">Follow Along</div>
-            <h2 className="section-title" style={{ fontSize:"clamp(40px,6vw,80px)" }}>Stay Connected</h2>
-            <p style={{ color:"var(--muted)", marginTop:16, fontSize:16 }}>Join our universe across every platform</p>
+            <div className="section-label">{T.socialLabel}</div>
+            <h2 className="section-title" style={{ fontSize:"clamp(40px,6vw,80px)" }}>{T.socialTitle}</h2>
+            <p style={{ color:"var(--muted)", marginTop:16, fontSize:16 }}>{T.socialSub}</p>
           </div>
           <div className="social-icons reveal">
             <a href="https://instagram.com/discoland.music" target="_blank" rel="noopener noreferrer" className="social-icon-btn instagram">
@@ -1107,18 +1219,18 @@ export default function DiscolandWebsite() {
           </div>
 
           <div className="newsletter reveal">
-            <h3>JOIN THE INNER CIRCLE</h3>
-            <p>First access to bookings, exclusive content, and behind-the-scenes passes.</p>
+            <h3>{T.newsletterTitle}</h3>
+            <p>{T.newsletterSub}</p>
             <div className="newsletter-form">
               <input
-                type="email" className="newsletter-input" placeholder="your@email.com"
+                type="email" className="newsletter-input" placeholder={T.newsletterPh}
                 value={newsletter} onChange={e => setNewsletter(e.target.value)}
               />
               <button
                 className="neon-btn neon-btn-primary"
                 onClick={() => { if (newsletter) { alert("You're on the list! 🪩"); setNewsletter(""); } }}
               >
-                Subscribe
+                {T.newsletterBtn}
               </button>
             </div>
           </div>
@@ -1129,40 +1241,38 @@ export default function DiscolandWebsite() {
       <section id="contact">
         <div className="container">
           <div className="reveal">
-            <div className="section-label">Get In Touch</div>
-            <h2 className="section-title">Contact</h2>
+            <div className="section-label">{T.contactLabel}</div>
+            <h2 className="section-title">{T.contactTitle}</h2>
           </div>
           <div className="contact-grid">
             <div className="contact-info reveal">
               <div className="contact-info-item">
-                <div className="contact-info-label">Bookings & Management</div>
+                <div className="contact-info-label">{T.contactBookingsLabel}</div>
                 <div className="contact-info-value">booking@discoland.nl</div>
               </div>
               <div className="contact-info-item">
-                <div className="contact-info-label">Instagram</div>
+                <div className="contact-info-label">{T.contactIgLabel}</div>
                 <div className="contact-info-value">@discoland.music</div>
               </div>
               <div className="contact-info-item">
-                <div className="contact-info-label">Based In</div>
-                <div className="contact-info-value">Amsterdam, Netherlands</div>
+                <div className="contact-info-label">{T.contactBasedLabel}</div>
+                <div className="contact-info-value">{T.contactBasedValue}</div>
               </div>
-              <p style={{ color:"var(--muted)", fontSize:14, lineHeight:1.7 }}>
-                For booking enquiries please include your proposed dates, event type, venue capacity, and details. We typically respond within 24–48 hours.
-              </p>
+              <p style={{ color:"var(--muted)", fontSize:14, lineHeight:1.7 }}>{T.contactInfo}</p>
             </div>
             <div className="reveal">
               {formSent
-                ? <div className="form-success">✦ MESSAGE RECEIVED · WE'LL BE IN TOUCH SOON ✦</div>
+                ? <div className="form-success">{T.contactSuccess}</div>
                 : <form className="contact-form" onSubmit={e => { e.preventDefault(); setFormSent(true); }}>
-                    <input className="form-input" placeholder="Your Name" value={contactForm.name}
+                    <input className="form-input" placeholder={T.contactNamePh} value={contactForm.name}
                       onChange={e => setContactForm(f => ({ ...f, name: e.target.value }))} required />
-                    <input type="email" className="form-input" placeholder="Your Email" value={contactForm.email}
+                    <input type="email" className="form-input" placeholder={T.contactEmailPh} value={contactForm.email}
                       onChange={e => setContactForm(f => ({ ...f, email: e.target.value }))} required />
-                    <textarea className="form-textarea" placeholder="Tell us about your event..."
+                    <textarea className="form-textarea" placeholder={T.contactMsgPh}
                       value={contactForm.message}
                       onChange={e => setContactForm(f => ({ ...f, message: e.target.value }))} required />
                     <button type="submit" className="neon-btn neon-btn-primary" style={{ alignSelf:"flex-start" }}>
-                      Send Message →
+                      {T.contactSendBtn}
                     </button>
                   </form>
               }
@@ -1188,13 +1298,13 @@ export default function DiscolandWebsite() {
       <footer className="footer">
         <div className="container">
           <div className="footer-logo">DISCOLAND</div>
-          <p className="footer-sub">High-energy live disco for events that explode with dance.</p>
+          <p className="footer-sub">{T.footerSub}</p>
           <div className="footer-links">
-            {[["hero","Home"],["music","Music"],["videos","Videos"],["tour","Tour"],["gallery","Gallery"],["about","About"],["contact","Contact"]].map(([id, label]) => (
+            {[["hero",T.footerHome],["music",T.footerMusic],["videos",T.footerVideos],["tour",T.footerTour],["gallery",T.footerGallery],["about",T.footerAbout],["contact",T.footerContact]].map(([id, label]) => (
               <a key={id} href="#" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a>
             ))}
           </div>
-          <p className="footer-copy">© 2025 Discoland · Amsterdam, NL · @discoland.music</p>
+          <p className="footer-copy">{T.footerCopy}</p>
         </div>
       </footer>
 
