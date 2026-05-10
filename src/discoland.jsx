@@ -299,14 +299,13 @@ globalStyle.textContent = `
   .lang-btn:hover:not(.active) { opacity: 0.8; }
   .lang-btn-en {
     background-color: #012169;
-    background-image:
-      linear-gradient(to bottom, transparent 39%, #fff 39% 61%, transparent 61%),
-      linear-gradient(to right,  transparent 39%, #fff 39% 61%, transparent 61%),
-      linear-gradient(to bottom, transparent 42%, #C8102E 42% 58%, transparent 58%),
-      linear-gradient(to right,  transparent 42%, #C8102E 42% 58%, transparent 58%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Crect width='60' height='30' fill='%23012169'/%3E%3Cline x1='0' y1='0' x2='60' y2='30' stroke='white' stroke-width='8'/%3E%3Cline x1='60' y1='0' x2='0' y2='30' stroke='white' stroke-width='8'/%3E%3Cpolygon points='0,0 10,0 60,25 60,30 50,30 0,5' fill='%23C8102E'/%3E%3Cpolygon points='60,0 50,0 0,25 0,30 10,30 60,5' fill='%23C8102E'/%3E%3Crect x='24' y='0' width='12' height='30' fill='white'/%3E%3Crect x='0' y='12' width='60' height='6' fill='white'/%3E%3Crect x='26' y='0' width='8' height='30' fill='%23C8102E'/%3E%3Crect x='0' y='13' width='60' height='4' fill='%23C8102E'/%3E%3C/svg%3E");
+    background-size: cover;
   }
   .lang-btn-nl {
-    background: linear-gradient(to bottom, #AE1C28 33.33%, #fff 33.33% 66.66%, #21468B 66.66%);
+    background-color: #21468B;
+    background-image: linear-gradient(to bottom, #AE1C28 0% 33.33%, #fff 33.33% 66.67%, transparent 66.67% 100%);
+    background-size: 100% 100%;
   }
   .track-item {
     display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 12px;
