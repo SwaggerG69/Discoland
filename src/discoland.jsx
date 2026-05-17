@@ -678,7 +678,7 @@ const REVIEWS = [
 
 const MEMBERS = [
   { id: 1, role: "Vocals",    name: "Ireen",  bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: IreenPhoto  },
-  { id: 2, role: "Vocals",    name: "Rachel", bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: RachelPhoto },
+  { id: 2, role: "Vocals",    name: "Rachel", bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: RachelPhoto, photoPosition: "20% center" },
   { id: 3, role: "Guitar",    name: "Emre",   bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: EmrePhoto   },
   { id: 4, role: "Bass",      name: "Ruud",   bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: RuudPhoto   },
   { id: 5, role: "Keyboards", name: "Lukas",  bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: LukasPhoto  },
@@ -871,7 +871,7 @@ export default function DiscolandWebsite() {
                 <div key={m.id} className="member-card reveal">
                   <div className="member-photo">
                     {m.photo
-                      ? <img src={m.photo} alt={m.name} />
+                      ? <img src={m.photo} alt={m.name} style={m.photoPosition ? { objectPosition: m.photoPosition } : undefined} />
                       : (
                         <div className="member-photo-placeholder">
                           <div className="member-photo-icon">🎵</div>
