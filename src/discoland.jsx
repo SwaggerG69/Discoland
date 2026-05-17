@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import logo from './assets/logo.jpg';
 import DLPhoto1  from './assets/DLPhoto1.jpeg';
 import DLPhoto2  from './assets/DLPhoto2.jpeg';
@@ -10,20 +10,6 @@ import DLPhoto7  from './assets/DLPhoto7.jpeg';
 import DLPhoto8  from './assets/DLPhoto8.jpeg';
 import DLPhoto9  from './assets/DLPhoto9.jpeg';
 import DLPhoto10 from './assets/DLPhoto10.jpeg';
-
-import audioCarWash         from './assets/Car Wash.mp3';
-import audioBadGirls        from './assets/Bad Girls.mp3';
-import audioDontStartNow    from './assets/Dont Start Now.mp3';
-import audioBoogieNights    from './assets/Boogie Nights.mp3';
-import audioDiscoInferno    from './assets/Disco Inferno.mp3';
-import audioLeFreak         from './assets/Le Freak.mp3';
-import audioMurder          from './assets/Murder On The Dancefloor.mp3';
-import audioVoulezVous      from './assets/Voulez-Vous.mp3';
-import audioBillieJean      from './assets/Billie Jean.mp3';
-import audioAboutDamnTime   from './assets/About Damn Time.mp3';
-import audioHotStuff        from './assets/Hot Stuff.mp3';
-import audioRelightMyFire   from './assets/Relight My Fire.mp3';
-import audioVenus           from './assets/Venus.mp3';
 
 // ── Fonts ──────────────────────────────────────────────────────────────────
 const fontLink = document.createElement("link");
@@ -170,7 +156,7 @@ globalStyle.textContent = `
     font-family: 'Syncopate', sans-serif; font-size: 10px; letter-spacing: 0.2em;
     color: var(--muted); text-decoration: none; transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--cyan); }
+  .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
   .nav-mobile-toggle {
     display: none; background: none; border: none;
     cursor: pointer; color: var(--text); font-size: 24px;
@@ -269,18 +255,26 @@ globalStyle.textContent = `
   .ticker-text { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.1em; padding: 0 40px; color: #fff; }
   .ticker-dot { color: var(--gold); }
 
-  /* Music */
-  .music-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 60px; }
-  @media (max-width: 768px) { .music-grid { grid-template-columns: 1fr; } }
+  /* Music — setlist only */
   .track-list {
     display: flex; flex-direction: column; gap: 8px;
-    max-height: 420px; overflow-y: auto;
+    max-height: 600px; overflow-y: auto;
     padding-right: 6px;
     scrollbar-width: thin; scrollbar-color: var(--pink) transparent;
   }
   .track-list::-webkit-scrollbar { width: 4px; }
   .track-list::-webkit-scrollbar-track { background: transparent; }
   .track-list::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 2px; }
+  .track-item {
+    display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: 12px;
+    background: var(--glass); border: 1px solid var(--glass-border); transition: background 0.2s;
+  }
+  .track-item:hover { background: rgba(255,45,120,0.06); }
+  .track-num { font-family: 'Syncopate', sans-serif; font-size: 10px; color: var(--muted); width: 24px; flex-shrink: 0; }
+  .track-info { flex: 1; }
+  .track-name { font-weight: 500; font-size: 15px; }
+  .track-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .track-duration { font-family: 'Syncopate', sans-serif; font-size: 11px; color: var(--muted); }
 
   .hero-logo {
     width: 220px; height: auto; margin-bottom: 36px;
@@ -307,70 +301,6 @@ globalStyle.textContent = `
     background-image: linear-gradient(to bottom, #AE1C28 0% 33.33%, #fff 33.33% 66.67%, transparent 66.67% 100%);
     background-size: 100% 100%;
   }
-  .track-item {
-    display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 12px;
-    background: var(--glass); border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.3s ease;
-  }
-  .track-item:hover, .track-item.active { background: rgba(255,45,120,0.08); border-color: var(--pink); }
-  .track-num { font-family: 'Syncopate', sans-serif; font-size: 10px; color: var(--muted); width: 20px; }
-  .track-item.active .track-num { color: var(--pink); }
-  .track-info { flex: 1; }
-  .track-name { font-weight: 500; font-size: 15px; }
-  .track-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .track-duration { font-family: 'Syncopate', sans-serif; font-size: 11px; color: var(--muted); }
-  .track-bars { display: flex; align-items: flex-end; gap: 3px; height: 24px; }
-  .track-bar { width: 3px; background: var(--pink); border-radius: 2px; animation: trackBar 0.8s ease-in-out infinite alternate; }
-  .track-bar:nth-child(2) { animation-delay: 0.15s; }
-  .track-bar:nth-child(3) { animation-delay: 0.3s; }
-  .track-bar:nth-child(4) { animation-delay: 0.45s; }
-  @keyframes trackBar { from { height: 4px; } to { height: 20px; } }
-  .player-panel { padding: 32px; display: flex; flex-direction: column; gap: 24px; }
-  .player-art {
-    width: 100%; aspect-ratio: 1; border-radius: 12px;
-    background: linear-gradient(135deg, var(--purple), var(--pink), var(--gold));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 80px; animation: spin-slow 15s linear infinite;
-  }
-  .player-title { font-family: 'Bebas Neue', sans-serif; font-size: 36px; }
-  .player-artist { color: var(--muted); font-size: 14px; }
-  .progress-bar { height: 4px; background: var(--glass-border); border-radius: 2px; cursor: pointer; position: relative; }
-  .progress-fill {
-    height: 100%; border-radius: 2px;
-    background: linear-gradient(90deg, var(--pink), var(--gold));
-    position: relative; transition: width 0.1s linear;
-  }
-  .progress-fill::after {
-    content: ''; position: absolute; right: -6px; top: -4px;
-    width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 0 8px var(--pink);
-  }
-  .player-controls { display: flex; align-items: center; justify-content: center; gap: 24px; }
-  .ctrl-btn {
-    background: none; border: none; cursor: pointer; color: var(--muted); font-size: 20px;
-    transition: all 0.2s; display: flex; align-items: center; justify-content: center;
-    width: 36px; height: 36px; border-radius: 50%;
-  }
-  .ctrl-btn:hover { color: var(--text); }
-  .ctrl-btn.play {
-    width: 56px; height: 56px; font-size: 24px; background: var(--pink); color: #fff;
-    box-shadow: 0 0 24px rgba(255,45,120,0.5); animation: pulse-glow 2s infinite;
-  }
-  .ctrl-btn.play:hover { transform: scale(1.08); }
-  .streaming-links { display: flex; gap: 12px; }
-  .stream-btn {
-    flex: 1; padding: 10px 8px; border-radius: 8px;
-    background: var(--glass); border: 1px solid var(--glass-border);
-    color: var(--muted); font-family: 'Syncopate', sans-serif; font-size: 9px; letter-spacing: 0.1em;
-    cursor: pointer; transition: all 0.3s; text-align: center; text-decoration: none; display: block;
-  }
-  .stream-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-  /* Spotify embed */
-  .spotify-embed-wrapper {
-    margin-top: 48px; border-radius: 16px; overflow: hidden;
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 0 40px rgba(29,185,84,0.1);
-  }
-  .spotify-embed-wrapper iframe { display: block; }
 
   /* Videos */
   .videos-section { background: var(--dark2); }
@@ -409,13 +339,6 @@ globalStyle.textContent = `
     color: #fff; font-size: 32px; cursor: pointer; opacity: 0.7; transition: opacity 0.2s;
   }
   .modal-close:hover { opacity: 1; }
-  .video-embed {
-    width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden;
-    background: #000; border: 1px solid var(--glass-border);
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 16px;
-    font-family: 'Syncopate', sans-serif; font-size: 12px; color: var(--muted);
-  }
 
   /* Tour */
   .tour-table { margin-top: 60px; }
@@ -548,7 +471,6 @@ globalStyle.textContent = `
   }
   .social-icon-btn:hover { transform: translateY(-8px); background: rgba(255,255,255,0.08); }
   .social-icon-btn.instagram:hover { border-color: #E1306C; color: #E1306C; box-shadow: 0 0 24px rgba(225,48,108,0.3); }
-  .social-icon-btn.spotify:hover  { border-color: #1DB954; color: #1DB954; box-shadow: 0 0 24px rgba(29,185,84,0.3); }
   .social-icon-btn.youtube:hover  { border-color: #FF0000; color: #FF0000; box-shadow: 0 0 24px rgba(255,0,0,0.3); }
   .social-icon-btn.tiktok:hover   { border-color: #69C9D0; color: #69C9D0; box-shadow: 0 0 24px rgba(105,201,208,0.3); }
   .social-icon-svg { font-size: 32px; }
@@ -605,10 +527,59 @@ globalStyle.textContent = `
   .footer-links { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
   .footer-links a {
     font-family: 'Syncopate', sans-serif; font-size: 9px; letter-spacing: 0.2em;
-    color: var(--muted); text-decoration: none; transition: color 0.2s;
+    color: var(--muted); text-decoration: none; transition: color 0.2s; cursor: pointer;
   }
   .footer-links a:hover { color: var(--cyan); }
   .footer-copy { margin-top: 32px; font-size: 12px; color: rgba(240,238,248,0.2); }
+
+  /* Members page */
+  .members-page { padding-top: 120px; min-height: 100vh; }
+  .members-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 60px;
+  }
+  @media (max-width: 900px) { .members-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .members-grid { grid-template-columns: 1fr; } }
+  .member-card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 20px; overflow: hidden; transition: all 0.3s ease;
+  }
+  .member-card:hover { border-color: rgba(255,45,120,0.4); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(255,45,120,0.1); }
+  .member-photo {
+    width: 100%; aspect-ratio: 3/4; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, rgba(155,48,255,0.2) 0%, rgba(255,45,120,0.15) 50%, rgba(0,245,255,0.1) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  }
+  .member-photo img {
+    width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;
+  }
+  .member-photo-placeholder {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+    position: relative; z-index: 1;
+  }
+  .member-photo-icon {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: rgba(255,255,255,0.06); border: 2px dashed rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+  }
+  .member-photo-label {
+    font-family: 'Syncopate', sans-serif; font-size: 8px; letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.2); text-transform: uppercase;
+  }
+  .member-body { padding: 24px; }
+  .member-role {
+    font-family: 'Syncopate', sans-serif; font-size: 9px; letter-spacing: 0.35em;
+    color: var(--pink); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .member-name {
+    font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.05em;
+    line-height: 1; margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 40%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .member-bio {
+    font-size: 14px; line-height: 1.7; color: rgba(240,238,248,0.6);
+  }
 
   /* Scroll reveal */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -616,59 +587,54 @@ globalStyle.textContent = `
 `;
 document.head.appendChild(globalStyle);
 
-// ── Playlist ID from environment (set in Vercel dashboard) ────────────────────
-// VITE_SPOTIFY_PLAYLIST_ID = 0D65SXdYNzt08vllqbkCA6
-const PLAYLIST_ID = import.meta.env.VITE_SPOTIFY_PLAYLIST_ID || "0D65SXdYNzt08vllqbkCA6";
-
 // ── Data ──────────────────────────────────────────────────────────────────────
 const TRACKS = [
-  { id:  1, name: "Car Wash",                  artist: "Rose Royce",                      duration: "3:52", emoji: "🚗", audio: audioCarWash        },
-  { id:  2, name: "Bad Girls",                 artist: "Donna Summer",                    duration: "4:01", emoji: "💃", audio: audioBadGirls        },
-  { id:  3, name: "Don't Start Now",           artist: "Dua Lipa",                        duration: "3:03", emoji: "✨", audio: audioDontStartNow    },
-  { id:  4, name: "Get Lucky",                 artist: "Daft Punk ft. Pharrell Williams", duration: "4:08", emoji: "🍀", audio: null                  },
-  { id:  5, name: "Boogie Nights",             artist: "Heatwave",                        duration: "3:45", emoji: "🌙", audio: audioBoogieNights    },
-  { id:  6, name: "Disco Inferno",             artist: "The Trammps",                     duration: "3:39", emoji: "🔥", audio: audioDiscoInferno    },
-  { id:  7, name: "Gimme! Gimme! Gimme!",      artist: "ABBA",                            duration: "4:50", emoji: "💫", audio: null                  },
-  { id:  8, name: "Le Freak",                  artist: "CHIC",                            duration: "3:32", emoji: "🎸", audio: audioLeFreak          },
-  { id:  9, name: "I Will Survive",            artist: "Gloria Gaynor",                   duration: "3:15", emoji: "✊", audio: null                  },
-  { id: 10, name: "Murder On The Dancefloor",  artist: "Sophie Ellis-Bextor",             duration: "3:46", emoji: "🪩", audio: audioMurder           },
-  { id: 11, name: "September",                 artist: "Earth, Wind & Fire",              duration: "3:35", emoji: "🌟", audio: null                  },
-  { id: 12, name: "Uptown Funk",               artist: "Mark Ronson ft. Bruno Mars",      duration: "4:30", emoji: "🔥", audio: null                  },
-  { id: 13, name: "Voulez-Vous",               artist: "ABBA",                            duration: "5:09", emoji: "🌈", audio: audioVoulezVous       },
-  { id: 14, name: "It's Raining Men",          artist: "The Weather Girls",               duration: "4:05", emoji: "⛈️", audio: null                 },
-  { id: 15, name: "Can't Get You Out of My Head", artist: "Kylie Minogue",               duration: "3:49", emoji: "💿", audio: null                  },
-  { id: 16, name: "Billie Jean",               artist: "Michael Jackson",                 duration: "4:54", emoji: "🎩", audio: audioBillieJean       },
-  { id: 17, name: "Levitating",                artist: "Dua Lipa",                        duration: "3:23", emoji: "🚀", audio: null                  },
-  { id: 18, name: "About Damn Time",           artist: "Lizzo",                           duration: "3:13", emoji: "⏰", audio: audioAboutDamnTime    },
-  { id: 19, name: "Cosmic Girl",               artist: "Jamiroquai",                      duration: "5:01", emoji: "🌌", audio: null                  },
-  { id: 20, name: "We Are Family",             artist: "Sister Sledge",                   duration: "3:28", emoji: "👨‍👩‍👧‍👦", audio: null             },
-  { id: 21, name: "Espresso",                  artist: "Sabrina Carpenter",               duration: "2:55", emoji: "☕", audio: null                  },
-  { id: 22, name: "Hot Stuff",                 artist: "Donna Summer",                    duration: "3:48", emoji: "🌶️", audio: audioHotStuff         },
-  { id: 23, name: "Play That Funky Music",     artist: "Wild Cherry",                     duration: "4:27", emoji: "🎵", audio: null                  },
-  { id: 24, name: "Relight My Fire",           artist: "Dan Hartman",                     duration: "4:11", emoji: "🕯️", audio: audioRelightMyFire    },
-  { id: 25, name: "Blue Monday '88",           artist: "New Order",                       duration: "4:46", emoji: "📅", audio: null                  },
-  { id: 26, name: "Canned Heat",               artist: "Jamiroquai",                      duration: "4:37", emoji: "🥫", audio: null                  },
-  { id: 27, name: "In The Dark",               artist: "Purple Disco Machine",            duration: "4:38", emoji: "🔮", audio: null                  },
-  { id: 28, name: "Sing It Back",              artist: "Moloko",                          duration: "7:11", emoji: "🎤", audio: null                  },
-  { id: 29, name: "Venus",                     artist: "Bananarama",                      duration: "3:51", emoji: "♀️", audio: audioVenus            },
-  { id: 30, name: "I Was Made For Lovin' You", artist: "KISS",                            duration: "4:32", emoji: "💋", audio: null },
-  { id: 31, name: "I Wanna Be Your Lover",     artist: "Prince",                           duration: "3:56", emoji: "🎸", audio: null },
-  { id: 32, name: "Funkytown",                 artist: "Lipps Inc.",                       duration: "3:47", emoji: "🏙️", audio: null },
-  { id: 33, name: "Stayin' Alive",             artist: "Bee Gees",                         duration: "4:45", emoji: "🕺", audio: null },
+  { id:  1, name: "Car Wash",                     artist: "Rose Royce",                      duration: "3:52", emoji: "🚗" },
+  { id:  2, name: "Bad Girls",                    artist: "Donna Summer",                    duration: "4:01", emoji: "💃" },
+  { id:  3, name: "Don't Start Now",              artist: "Dua Lipa",                        duration: "3:03", emoji: "✨" },
+  { id:  4, name: "Get Lucky",                    artist: "Daft Punk ft. Pharrell Williams", duration: "4:08", emoji: "🍀" },
+  { id:  5, name: "Boogie Nights",                artist: "Heatwave",                        duration: "3:45", emoji: "🌙" },
+  { id:  6, name: "Disco Inferno",                artist: "The Trammps",                     duration: "3:39", emoji: "🔥" },
+  { id:  7, name: "Gimme! Gimme! Gimme!",         artist: "ABBA",                            duration: "4:50", emoji: "💫" },
+  { id:  8, name: "Le Freak",                     artist: "CHIC",                            duration: "3:32", emoji: "🎸" },
+  { id:  9, name: "I Will Survive",               artist: "Gloria Gaynor",                   duration: "3:15", emoji: "✊" },
+  { id: 10, name: "Murder On The Dancefloor",     artist: "Sophie Ellis-Bextor",             duration: "3:46", emoji: "🪩" },
+  { id: 11, name: "September",                    artist: "Earth, Wind & Fire",              duration: "3:35", emoji: "🌟" },
+  { id: 12, name: "Uptown Funk",                  artist: "Mark Ronson ft. Bruno Mars",      duration: "4:30", emoji: "🔥" },
+  { id: 13, name: "Voulez-Vous",                  artist: "ABBA",                            duration: "5:09", emoji: "🌈" },
+  { id: 14, name: "It's Raining Men",             artist: "The Weather Girls",               duration: "4:05", emoji: "⛈️" },
+  { id: 15, name: "Can't Get You Out of My Head", artist: "Kylie Minogue",                   duration: "3:49", emoji: "💿" },
+  { id: 16, name: "Billie Jean",                  artist: "Michael Jackson",                 duration: "4:54", emoji: "🎩" },
+  { id: 17, name: "Levitating",                   artist: "Dua Lipa",                        duration: "3:23", emoji: "🚀" },
+  { id: 18, name: "About Damn Time",              artist: "Lizzo",                           duration: "3:13", emoji: "⏰" },
+  { id: 19, name: "Cosmic Girl",                  artist: "Jamiroquai",                      duration: "5:01", emoji: "🌌" },
+  { id: 20, name: "We Are Family",                artist: "Sister Sledge",                   duration: "3:28", emoji: "👨‍👩‍👧‍👦" },
+  { id: 21, name: "Espresso",                     artist: "Sabrina Carpenter",               duration: "2:55", emoji: "☕" },
+  { id: 22, name: "Hot Stuff",                    artist: "Donna Summer",                    duration: "3:48", emoji: "🌶️" },
+  { id: 23, name: "Play That Funky Music",        artist: "Wild Cherry",                     duration: "4:27", emoji: "🎵" },
+  { id: 24, name: "Relight My Fire",              artist: "Dan Hartman",                     duration: "4:11", emoji: "🕯️" },
+  { id: 25, name: "Blue Monday '88",              artist: "New Order",                       duration: "4:46", emoji: "📅" },
+  { id: 26, name: "Canned Heat",                  artist: "Jamiroquai",                      duration: "4:37", emoji: "🥫" },
+  { id: 27, name: "In The Dark",                  artist: "Purple Disco Machine",            duration: "4:38", emoji: "🔮" },
+  { id: 28, name: "Sing It Back",                 artist: "Moloko",                          duration: "7:11", emoji: "🎤" },
+  { id: 29, name: "Venus",                        artist: "Bananarama",                      duration: "3:51", emoji: "♀️" },
+  { id: 30, name: "I Was Made For Lovin' You",    artist: "KISS",                            duration: "4:32", emoji: "💋" },
+  { id: 31, name: "I Wanna Be Your Lover",        artist: "Prince",                          duration: "3:56", emoji: "🎸" },
+  { id: 32, name: "Funkytown",                    artist: "Lipps Inc.",                      duration: "3:47", emoji: "🏙️" },
+  { id: 33, name: "Stayin' Alive",                artist: "Bee Gees",                        duration: "4:45", emoji: "🕺" },
 ];
 
 const VIDEOS = [
-  { id: 1, title: "Discoland Promo",        sub: "Official Promo Video",         youtubeId: "J70XtMp2lV8" },
-  { id: 2, title: "Discoland Promo 2",      sub: "Official Promo Video",         youtubeId: "gn9SxkdTYfY" },
-  { id: 3, title: "Discoland Wedding Party",sub: "Live at a Wedding",            youtubeId: "eHhIshWbhlc" },
+  { id: 1, title: "Discoland Promo",         sub: "Official Promo Video", youtubeId: "J70XtMp2lV8" },
+  { id: 2, title: "Discoland Promo 2",       sub: "Official Promo Video", youtubeId: "gn9SxkdTYfY" },
+  { id: 3, title: "Discoland Wedding Party", sub: "Live at a Wedding",    youtubeId: "eHhIshWbhlc" },
 ];
 
 const TOUR_DATES = [
-  { date: "JUN 11", city: "Deventer",           venue: "Wedding",    sold: true,  private: true,  ticketUrl: null },
-  { date: "JUN 20", city: "Broek op Langedijk", venue: "Broekpop",   sold: false, private: false, ticketUrl: "https://instagram.com/discoland.music" },
-  { date: "JUL 31", city: "Amsterdam",          venue: "De Kring",   sold: false, private: false, ticketUrl: "https://instagram.com/discoland.music" },
+  { date: "JUN 11", city: "Deventer",           venue: "Wedding",  sold: true,  private: true,  ticketUrl: null },
+  { date: "JUN 20", city: "Broek op Langedijk", venue: "Broekpop", sold: false, private: false, ticketUrl: "https://instagram.com/discoland.music" },
+  { date: "JUL 31", city: "Amsterdam",          venue: "De Kring", sold: false, private: false, ticketUrl: "https://instagram.com/discoland.music" },
 ];
-// ↑ To add more dates: { date: "AUG 15", city: "Rotterdam", venue: "Venue Name", sold: false, ticketUrl: "https://..." }
 
 const GALLERY_ITEMS = [
   { src: DLPhoto1,  feat: true  },
@@ -700,8 +666,17 @@ const REVIEWS = [
     text: "What a fantastic performance you guys put on! You really made our day even more unforgettable. We have received many compliments — everyone is really lyrical about your performance!",
     author: "Jan & Dore",
     source: "Wedding Review",
-    badge: "Weddubg",
+    badge: "Wedding",
   },
+];
+
+const MEMBERS = [
+  { id: 1, role: "Vocals",    name: "Ireen",  bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
+  { id: 2, role: "Vocals",    name: "Rachel", bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
+  { id: 3, role: "Guitar",    name: "Emre",   bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
+  { id: 4, role: "Bass",      name: "Ruud",   bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
+  { id: 5, role: "Keyboards", name: "Lukas",  bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
+  { id: 6, role: "Drums",     name: "Tansel", bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
 ];
 
 // ── Scroll reveal hook ────────────────────────────────────────────────────────
@@ -720,12 +695,12 @@ function useScrollReveal() {
 // ── Translations ─────────────────────────────────────────────────────────────
 const TRANSLATIONS = {
   en: {
-    navMusic:"Music", navVideos:"Videos", navTour:"Tour", navGallery:"Gallery", navAbout:"About", navContact:"Contact",
+    navMusic:"Music", navVideos:"Videos", navTour:"Tour", navGallery:"Gallery", navAbout:"About", navContact:"Contact", navMembers:"Members",
     heroEyebrow:"Amsterdam · High-Energy Disco · Live",
     heroTagline:"where the dance floor explodes with non-stop disco magic",
-    heroCta1:"Hear Our Setlist", heroCta2:"Watch Videos", heroCta3:"Book Us",
+    heroCta1:"Our Setlist", heroCta2:"Watch Videos", heroCta3:"Book Us",
     tickerExtra:"LIVE DISCO COVERS ✦ DANCE FLOOR EXPLOSION ✦ BOOK US FOR YOUR EVENT ✦",
-    musicLabel:"Setlist", musicTitle:"The Music", musicPlaylist:"Full Playlist",
+    musicLabel:"Setlist", musicTitle:"The Music",
     videosLabel:"Visual", videosTitle:"Videos",
     tourLabel:"Live", tourTitle:"Upcoming Shows", tourTickets:"Tickets →", tourSoldOut:"Sold Out", tourPrivate:"Private",
     galleryLabel:"Photos", galleryTitle:"Gallery",
@@ -741,6 +716,7 @@ const TRANSLATIONS = {
     aboutCardTitle:"READY TO PARTY?",
     aboutCardSub:"Book us for your next event and let's create an unforgettable night of non-stop disco magic.",
     aboutCardBtn:"Book Discoland →", aboutCardTag:"✦ Making every dance floor a disco inferno ✦",
+    membersLabel:"The People", membersTitle:"Meet The Band",
     socialLabel:"Follow Along", socialTitle:"Stay Connected", socialSub:"Join our universe across every platform",
     newsletterTitle:"JOIN THE INNER CIRCLE",
     newsletterSub:"First access to bookings, exclusive content, and behind-the-scenes passes.",
@@ -755,15 +731,15 @@ const TRANSLATIONS = {
     footerSub:"High-energy live disco for events that explode with dance.",
     footerCopy:"© 2025 Discoland · Amsterdam, NL · @discoland.music",
     footerHome:"Home", footerMusic:"Music", footerVideos:"Videos", footerTour:"Tour",
-    footerGallery:"Gallery", footerAbout:"About", footerContact:"Contact",
+    footerGallery:"Gallery", footerAbout:"About", footerContact:"Contact", footerMembers:"Members",
   },
   nl: {
-    navMusic:"Muziek", navVideos:"Video's", navTour:"Tour", navGallery:"Galerij", navAbout:"Over Ons", navContact:"Contact",
+    navMusic:"Muziek", navVideos:"Video's", navTour:"Tour", navGallery:"Galerij", navAbout:"Over Ons", navContact:"Contact", navMembers:"Leden",
     heroEyebrow:"Amsterdam · High-Energy Disco · Live",
     heroTagline:"waar de dansvloer explodeert met non-stop discomagie",
-    heroCta1:"Beluister Onze Setlist", heroCta2:"Bekijk Video's", heroCta3:"Boek Ons",
+    heroCta1:"Onze Setlist", heroCta2:"Bekijk Video's", heroCta3:"Boek Ons",
     tickerExtra:"LIVE DISCO COVERS ✦ DANSVLOER EXPLOSIE ✦ BOEK ONS VOOR UW EVENEMENT ✦",
-    musicLabel:"Setlist", musicTitle:"De Muziek", musicPlaylist:"Volledige Playlist",
+    musicLabel:"Setlist", musicTitle:"De Muziek",
     videosLabel:"Visueel", videosTitle:"Video's",
     tourLabel:"Live", tourTitle:"Aankomende Shows", tourTickets:"Tickets →", tourSoldOut:"Uitverkocht", tourPrivate:"Besloten",
     galleryLabel:"Foto's", galleryTitle:"Galerij",
@@ -779,6 +755,7 @@ const TRANSLATIONS = {
     aboutCardTitle:"KLAAR VOOR HET FEEST?",
     aboutCardSub:"Boek ons voor uw volgende evenement en laten we samen een onvergetelijke avond vol non-stop discomagie creëren.",
     aboutCardBtn:"Boek Discoland →", aboutCardTag:"✦ Van elke dansvloer een disco-inferno ✦",
+    membersLabel:"De Mensen", membersTitle:"Ontmoet De Band",
     socialLabel:"Volg Ons", socialTitle:"Blijf Verbonden", socialSub:"Sluit je aan bij ons universum op elk platform",
     newsletterTitle:"WORD LID VAN DE INNER CIRCLE",
     newsletterSub:"Eerste toegang tot boekingen, exclusieve content en backstage-passen.",
@@ -793,7 +770,7 @@ const TRANSLATIONS = {
     footerSub:"Energieke live-disco voor evenementen die van de dansvloer een feest maken.",
     footerCopy:"© 2025 Discoland · Amsterdam, NL · @discoland.music",
     footerHome:"Home", footerMusic:"Muziek", footerVideos:"Video's", footerTour:"Tour",
-    footerGallery:"Galerij", footerAbout:"Over Ons", footerContact:"Contact",
+    footerGallery:"Galerij", footerAbout:"Over Ons", footerContact:"Contact", footerMembers:"Leden",
   },
 };
 
@@ -801,17 +778,13 @@ const TRANSLATIONS = {
 export default function DiscolandWebsite() {
   const [navScrolled,  setNavScrolled]  = useState(false);
   const [navOpen,      setNavOpen]      = useState(false);
-  const [activeTrack,  setActiveTrack]  = useState(1);
-  const [playing,      setPlaying]      = useState(false);
-  const [progress,     setProgress]     = useState(0);
-  const [currentTime,  setCurrentTime]  = useState(0);
+  const [currentPage,  setCurrentPage]  = useState("home");
   const [videoModal,   setVideoModal]   = useState(null);
   const [lightbox,     setLightbox]     = useState(null);
   const [contactForm,  setContactForm]  = useState({ name: "", email: "", message: "" });
   const [formSent,     setFormSent]     = useState(false);
   const [newsletter,   setNewsletter]   = useState("");
   const [lang,         setLang]         = useState("en");
-  const audioRef = useRef(null);
   const T = TRANSLATIONS[lang];
   useScrollReveal();
 
@@ -821,38 +794,25 @@ export default function DiscolandWebsite() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const track = TRACKS.find(t => t.id === activeTrack);
-
-  const fmtTime = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
-
-  const playTrack = (id) => {
-    const t = TRACKS.find(tr => tr.id === id);
-    setActiveTrack(id);
-    setProgress(0);
-    setCurrentTime(0);
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (t?.audio) {
-      audio.src = t.audio;
-      audio.load();
-      audio.play().catch(() => {});
-      setPlaying(true);
-    } else {
-      audio.src = '';
-      setPlaying(false);
-    }
-  };
-
-  const togglePlay = () => {
-    const audio = audioRef.current;
-    if (!audio || !track?.audio) return;
-    if (playing) { audio.pause(); setPlaying(false); }
-    else { audio.play().catch(() => {}); setPlaying(true); }
-  };
-
   const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    if (currentPage !== "home") {
+      setCurrentPage("home");
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 50);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
     setNavOpen(false);
+  };
+
+  const goToMembers = () => {
+    setCurrentPage("members");
+    setNavOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const goHome = () => {
+    setCurrentPage("home");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -861,7 +821,7 @@ export default function DiscolandWebsite() {
       {/* ── NAV ── */}
       <nav className={`nav${navScrolled ? " scrolled" : ""}`}>
         <div className="nav-inner">
-          <div className="nav-logo" onClick={() => scrollTo("hero")}>
+          <div className="nav-logo" onClick={goHome}>
             <img src={logo} alt="Discoland" />
             <span className="nav-logo-text">DISCOLAND</span>
           </div>
@@ -869,6 +829,15 @@ export default function DiscolandWebsite() {
             {[["music",T.navMusic],["videos",T.navVideos],["tour",T.navTour],["gallery",T.navGallery],["about",T.navAbout],["contact",T.navContact]].map(([id, label]) => (
               <li key={id}><a href="#" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a></li>
             ))}
+            <li>
+              <a
+                href="#"
+                className={currentPage === "members" ? "active" : ""}
+                onClick={e => { e.preventDefault(); goToMembers(); }}
+              >
+                {T.navMembers}
+              </a>
+            </li>
           </ul>
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
             <div className="lang-toggle">
@@ -882,422 +851,406 @@ export default function DiscolandWebsite() {
         </div>
       </nav>
 
-      {/* ── HERO ── */}
-      <section id="hero" className="hero">
-        <div className="hero-bg" />
-        <div className="hero-grid" />
-        <div className="disco-ball" />
-        <div className="scan-line" />
-        <div className="hero-content">
-          <img src={logo} alt="Discoland" className="hero-logo" />
-          <div className="hero-eyebrow">{T.heroEyebrow}</div>
-          <h1 className="hero-title">DISCOLAND</h1>
-          <p className="hero-tagline">
-            <span>Bangers All The Time</span> — {T.heroTagline}
-          </p>
-          <div className="hero-ctas">
-            <a href="#" className="neon-btn neon-btn-primary" onClick={e => { e.preventDefault(); scrollTo("music"); }}>
-              ▶ {T.heroCta1}
-            </a>
-            <a href="#" className="neon-btn neon-btn-outline" onClick={e => { e.preventDefault(); scrollTo("videos"); }}>
-              ◉ {T.heroCta2}
-            </a>
-            <a href="#" className="neon-btn neon-btn-outline" onClick={e => { e.preventDefault(); scrollTo("contact"); }}>
-              ◈ {T.heroCta3}
-            </a>
-          </div>
-        </div>
-        <a href="#" className="hero-scroll" onClick={e => { e.preventDefault(); scrollTo("music"); }}>
-          <span>SCROLL</span>
-          <div className="hero-scroll-line" />
-        </a>
-      </section>
+      {currentPage === "members" ? (
 
-      {/* ── TICKER ── */}
-      <div className="ticker">
-        <div className="ticker-inner">
-          {[...Array(6)].map((_, i) => (
-            <span key={i} className="ticker-text">
-              DISCOLAND <span className="ticker-dot">✦</span> BANGERS ALL THE TIME <span className="ticker-dot">✦</span> {T.tickerExtra}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ── MUSIC ── */}
-      <section id="music">
-        <div className="container">
-          <div className="reveal">
-            <div className="section-label">{T.musicLabel}</div>
-            <h2 className="section-title">{T.musicTitle}</h2>
-          </div>
-
-          <div className="music-grid reveal">
-            {/* Track list */}
-            <div className="track-list">
-              {TRACKS.map((t, i) => (
-                <div
-                  key={t.id}
-                  className={`track-item${activeTrack === t.id ? " active" : ""}`}
-                  onClick={() => playTrack(t.id)}
-                >
-                  <div className="track-num">
-                    {activeTrack === t.id && playing
-                      ? <div className="track-bars">
-                          {[14,10,18,12].map((h, j) => <div key={j} className="track-bar" style={{ height: `${h}px` }} />)}
+        /* ── MEMBERS PAGE ── */
+        <div className="members-page">
+          <div className="container">
+            <div className="reveal">
+              <div className="section-label">{T.membersLabel}</div>
+              <h2 className="section-title">{T.membersTitle}</h2>
+            </div>
+            <div className="members-grid">
+              {MEMBERS.map(m => (
+                <div key={m.id} className="member-card reveal">
+                  <div className="member-photo">
+                    {m.photo
+                      ? <img src={m.photo} alt={m.name} />
+                      : (
+                        <div className="member-photo-placeholder">
+                          <div className="member-photo-icon">🎵</div>
+                          <span className="member-photo-label">Photo</span>
                         </div>
-                      : String(i + 1).padStart(2, "0")}
+                      )
+                    }
                   </div>
-                  <div className="track-info">
-                    <div className="track-name">{t.name}</div>
-                    <div className="track-meta">{t.artist}</div>
+                  <div className="member-body">
+                    <div className="member-role">{m.role}</div>
+                    <div className="member-name">{m.name}</div>
+                    <p className="member-bio">{m.bio}</p>
                   </div>
-                  <div className="track-duration">{t.duration}</div>
                 </div>
               ))}
             </div>
 
-            {/* Player */}
-            <div className="glass-card player-panel">
-              <div className="player-art">{track?.emoji}</div>
-              <div>
-                <div className="player-title">{track?.name}</div>
-                <div className="player-artist">Discoland · {track?.artist}</div>
-              </div>
-              <div>
-                <div className="progress-bar" onClick={e => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const pct = ((e.clientX - rect.left) / rect.width) * 100;
-                  setProgress(pct);
-                  const audio = audioRef.current;
-                  if (audio && audio.duration) audio.currentTime = (pct / 100) * audio.duration;
-                }}>
-                  <div className="progress-fill" style={{ width: `${progress}%` }} />
-                </div>
-                <div style={{ display:"flex", justifyContent:"space-between", marginTop:8, fontSize:11, color:"var(--muted)", fontFamily:"Syncopate" }}>
-                  <span>{fmtTime(currentTime)}</span>
-                  <span>{track?.duration}</span>
-                </div>
-              </div>
-              <div className="player-controls">
-                <button className="ctrl-btn" onClick={() => playTrack(activeTrack > 1 ? activeTrack - 1 : TRACKS.length)}>⏮</button>
-                <button className="ctrl-btn play" onClick={togglePlay}>
-                  {playing ? "⏸" : "▶"}
-                </button>
-                <button className="ctrl-btn" onClick={() => playTrack(activeTrack < TRACKS.length ? activeTrack + 1 : 1)}>⏭</button>
-              </div>
-              <div className="streaming-links">
-                <a
-                  href={`https://open.spotify.com/playlist/${PLAYLIST_ID}`}
-                  target="_blank" rel="noopener noreferrer"
-                  className="stream-btn"
-                >
-                  🎵 {T.musicPlaylist}
-                </a>
-                <a href="https://instagram.com/discoland.music" target="_blank" rel="noopener noreferrer" className="stream-btn">
-                  📸 Instagram
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Live Spotify embed ── */}
-          <div className="spotify-embed-wrapper reveal">
-            <iframe
-              src={`https://open.spotify.com/embed/playlist/${PLAYLIST_ID}?utm_source=generator&theme=0`}
-              width="100%"
-              height="380"
-              frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── VIDEOS ── */}
-      <section id="videos" className="videos-section">
-        <div className="container">
-          <div className="reveal">
-            <div className="section-label">{T.videosLabel}</div>
-            <h2 className="section-title">{T.videosTitle}</h2>
-          </div>
-          <div className="video-grid">
-            {VIDEOS.map(v => (
-              <div key={v.id} className="video-card reveal" onClick={() => setVideoModal(v)}>
-                <div className="video-thumb" style={{ background: "#000", padding: 0 }}>
-                  <img
-                    src={`https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg`}
-                    alt={v.title}
-                    style={{ width:"100%", height:"100%", objectFit:"cover", position:"absolute", inset:0 }}
-                  />
-                  <div className="video-overlay"><div className="play-icon">▶</div></div>
-                </div>
-                <div className="video-info">
-                  <div className="video-title">{v.title}</div>
-                  <div className="video-sub">{v.sub}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Video modal */}
-      {videoModal && (
-        <div className="video-modal" onClick={() => setVideoModal(null)}>
-          <div className="video-modal-inner" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setVideoModal(null)}>✕</button>
-            <iframe
-              width="100%" style={{ aspectRatio:"16/9", borderRadius:12, border:"none", display:"block" }}
-              src={`https://www.youtube.com/embed/${videoModal.youtubeId}?autoplay=1`}
-              allow="autoplay; encrypted-media" allowFullScreen
-            />
-          </div>
-        </div>
-      )}
-
-      {/* ── TOUR ── */}
-      <section id="tour">
-        <div className="container">
-          <div className="reveal">
-            <div className="section-label">{T.tourLabel}</div>
-            <h2 className="section-title">{T.tourTitle}</h2>
-          </div>
-          <div className="tour-table">
-            {TOUR_DATES.map((show, i) => (
-              <div key={i} className="tour-row reveal">
-                <div className="tour-date">{show.date}</div>
-                <div><div className="tour-city">{show.city}</div></div>
-                <div className="tour-venue">{show.venue}</div>
-                <a
-                  href={show.private ? "#" : (show.ticketUrl || "#")}
-                  target={(!show.private && show.ticketUrl) ? "_blank" : undefined}
-                  rel="noopener noreferrer"
-                  className={`tour-btn${show.private ? " sold-out" : ""}`}
-                  onClick={e => { if (show.private || !show.ticketUrl) e.preventDefault(); }}
-                >
-                  {show.private ? T.tourPrivate : T.tourTickets}
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── GALLERY ── */}
-      <section id="gallery" className="gallery-section">
-        <div className="container">
-          <div className="reveal">
-            <div className="section-label">{T.galleryLabel}</div>
-            <h2 className="section-title">{T.galleryTitle}</h2>
-          </div>
-          <div className="gallery-grid reveal">
-            {GALLERY_ITEMS.map((item, i) => (
-              <div
-                key={i}
-                className={`gallery-item${item.feat ? " gallery-featured" : ""}`}
-                onClick={() => setLightbox(item)}
-              >
-                <div className="gallery-item-inner">
-                  <img src={item.src} alt={`Discoland photo ${i + 1}`} />
-                  <div className="gallery-item-overlay">🔍</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {lightbox && (
-        <div className="lightbox" onClick={() => setLightbox(null)}>
-          <button className="lightbox-close">✕</button>
-          <img src={lightbox.src} alt="Discoland" className="lightbox-img" />
-        </div>
-      )}
-
-      {/* ── REVIEWS ── */}
-      <section className="reviews-section">
-        <div className="container">
-          <div className="reveal">
-            <div className="section-label">{T.reviewsLabel}</div>
-            <h2 className="section-title">{T.reviewsTitle}</h2>
-          </div>
-        </div>
-        <div style={{ paddingLeft: 24 }}>
-          <div className="reviews-track reveal">
-            {REVIEWS.map((r, i) => (
-              <div key={i} className="review-card">
-                <div className="review-stars">★★★★★</div>
-                <p className="review-text">{r.text}</p>
-                <div className="review-author">{r.author}</div>
-                <div className="review-source">{r.source}</div>
-                {r.badge && <span className="review-badge">{r.badge}</span>}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── ABOUT ── */}
-      <section id="about" className="about-section">
-        <div className="container">
-          <div className="reveal">
-            <div className="section-label">{T.aboutLabel}</div>
-            <h2 className="section-title">{T.aboutTitle}</h2>
-          </div>
-          <div className="about-grid">
-            <div className="about-bio reveal">
-              <p><strong>{T.aboutBio1}</strong></p>
-              <p>{T.aboutBio2}</p>
-              <div className="about-highlight-box">
-                <p style={{ fontWeight:600, color:"var(--pink)", marginBottom:8 }}>{T.aboutBoxTitle}</p>
-                <ul>
-                  <li><strong>{T.aboutItem1T}</strong> {T.aboutItem1}</li>
-                  <li><strong>{T.aboutItem2T}</strong> {T.aboutItem2}</li>
-                  <li><strong>{T.aboutItem3T}</strong> {T.aboutItem3}</li>
-                </ul>
-              </div>
-              <p style={{ marginTop:20 }}>{T.aboutBio3}</p>
-            </div>
-            <div className="reveal">
-              <div className="glass-card" style={{ padding:32 }}>
-                <div style={{ fontSize:64, textAlign:"center", marginBottom:24 }}>🪩</div>
-                <h3 style={{ textAlign:"center", color:"var(--pink)", marginBottom:16, fontFamily:"Bebas Neue", fontSize:28 }}>
-                  {T.aboutCardTitle}
-                </h3>
-                <p style={{ textAlign:"center", color:"var(--muted)", marginBottom:24, fontSize:15 }}>
-                  {T.aboutCardSub}
-                </p>
-                <a
-                  href="#"
-                  className="neon-btn neon-btn-primary"
-                  style={{ width:"100%", justifyContent:"center", marginBottom:16 }}
-                  onClick={e => { e.preventDefault(); scrollTo("contact"); }}
-                >
-                  {T.aboutCardBtn}
-                </a>
-                <div style={{ marginTop:24, paddingTop:24, borderTop:"1px solid var(--glass-border)" }}>
-                  <p style={{ fontSize:14, color:"var(--cyan)", textAlign:"center" }}>{T.aboutCardTag}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SOCIAL ── */}
-      <section className="social-section">
-        <div className="container">
-          <div className="reveal">
-            <div className="section-label">{T.socialLabel}</div>
-            <h2 className="section-title" style={{ fontSize:"clamp(40px,6vw,80px)" }}>{T.socialTitle}</h2>
-            <p style={{ color:"var(--muted)", marginTop:16, fontSize:16 }}>{T.socialSub}</p>
-          </div>
-          <div className="social-icons reveal">
-            <a href="https://instagram.com/discoland.music" target="_blank" rel="noopener noreferrer" className="social-icon-btn instagram">
-              <span className="social-icon-svg">📸</span><span>Instagram</span>
-            </a>
-            <a href={`https://open.spotify.com/playlist/${PLAYLIST_ID}`} target="_blank" rel="noopener noreferrer" className="social-icon-btn spotify">
-              <span className="social-icon-svg">🎧</span><span>Spotify</span>
-            </a>
-            <a href="#" className="social-icon-btn youtube" target="_blank" rel="noopener noreferrer">
-              <span className="social-icon-svg">▶</span><span>YouTube</span>
-            </a>
-            <a href="#" className="social-icon-btn tiktok" target="_blank" rel="noopener noreferrer">
-              <span className="social-icon-svg">🎵</span><span>TikTok</span>
-            </a>
-          </div>
-
-          <div className="newsletter reveal">
-            <h3>{T.newsletterTitle}</h3>
-            <p>{T.newsletterSub}</p>
-            <div className="newsletter-form">
-              <input
-                type="email" className="newsletter-input" placeholder={T.newsletterPh}
-                value={newsletter} onChange={e => setNewsletter(e.target.value)}
-              />
-              <button
+            <div style={{ marginTop:80, textAlign:"center" }}>
+              <a
+                href="#"
                 className="neon-btn neon-btn-primary"
-                onClick={() => { if (newsletter) { alert("You're on the list! 🪩"); setNewsletter(""); } }}
+                onClick={e => { e.preventDefault(); scrollTo("contact"); }}
               >
-                {T.newsletterBtn}
-              </button>
+                ◈ {T.heroCta3}
+              </a>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ── CONTACT ── */}
-      <section id="contact">
-        <div className="container">
-          <div className="reveal">
-            <div className="section-label">{T.contactLabel}</div>
-            <h2 className="section-title">{T.contactTitle}</h2>
-          </div>
-          <div className="contact-grid">
-            <div className="contact-info reveal">
-              <div className="contact-info-item">
-                <div className="contact-info-label">{T.contactBookingsLabel}</div>
-                <div className="contact-info-value">booking@discoland.nl</div>
+          {/* ── FOOTER (members page) ── */}
+          <footer className="footer" style={{ marginTop:80 }}>
+            <div className="container">
+              <div className="footer-logo">DISCOLAND</div>
+              <p className="footer-sub">{T.footerSub}</p>
+              <div className="footer-links">
+                <a onClick={goHome}>{T.footerHome}</a>
+                {[["music",T.footerMusic],["videos",T.footerVideos],["tour",T.footerTour],["gallery",T.footerGallery],["about",T.footerAbout],["contact",T.footerContact]].map(([id, label]) => (
+                  <a key={id} onClick={() => scrollTo(id)}>{label}</a>
+                ))}
+                <a onClick={goToMembers}>{T.footerMembers}</a>
               </div>
-              <div className="contact-info-item">
-                <div className="contact-info-label">{T.contactIgLabel}</div>
-                <div className="contact-info-value">@discoland.music</div>
-              </div>
-              <div className="contact-info-item">
-                <div className="contact-info-label">{T.contactBasedLabel}</div>
-                <div className="contact-info-value">{T.contactBasedValue}</div>
-              </div>
-              <p style={{ color:"var(--muted)", fontSize:14, lineHeight:1.7 }}>{T.contactInfo}</p>
+              <p className="footer-copy">{T.footerCopy}</p>
             </div>
-            <div className="reveal">
-              {formSent
-                ? <div className="form-success">{T.contactSuccess}</div>
-                : <form className="contact-form" onSubmit={e => { e.preventDefault(); setFormSent(true); }}>
-                    <input className="form-input" placeholder={T.contactNamePh} value={contactForm.name}
-                      onChange={e => setContactForm(f => ({ ...f, name: e.target.value }))} required />
-                    <input type="email" className="form-input" placeholder={T.contactEmailPh} value={contactForm.email}
-                      onChange={e => setContactForm(f => ({ ...f, email: e.target.value }))} required />
-                    <textarea className="form-textarea" placeholder={T.contactMsgPh}
-                      value={contactForm.message}
-                      onChange={e => setContactForm(f => ({ ...f, message: e.target.value }))} required />
-                    <button type="submit" className="neon-btn neon-btn-primary" style={{ alignSelf:"flex-start" }}>
-                      {T.contactSendBtn}
-                    </button>
-                  </form>
-              }
+          </footer>
+        </div>
+
+      ) : (
+
+        /* ── HOME PAGE ── */
+        <>
+
+          {/* ── HERO ── */}
+          <section id="hero" className="hero">
+            <div className="hero-bg" />
+            <div className="hero-grid" />
+            <div className="disco-ball" />
+            <div className="scan-line" />
+            <div className="hero-content">
+              <img src={logo} alt="Discoland" className="hero-logo" />
+              <div className="hero-eyebrow">{T.heroEyebrow}</div>
+              <h1 className="hero-title">DISCOLAND</h1>
+              <p className="hero-tagline">
+                <span>Bangers All The Time</span> — {T.heroTagline}
+              </p>
+              <div className="hero-ctas">
+                <a href="#" className="neon-btn neon-btn-primary" onClick={e => { e.preventDefault(); scrollTo("music"); }}>
+                  ▶ {T.heroCta1}
+                </a>
+                <a href="#" className="neon-btn neon-btn-outline" onClick={e => { e.preventDefault(); scrollTo("videos"); }}>
+                  ◉ {T.heroCta2}
+                </a>
+                <a href="#" className="neon-btn neon-btn-outline" onClick={e => { e.preventDefault(); scrollTo("contact"); }}>
+                  ◈ {T.heroCta3}
+                </a>
+              </div>
+            </div>
+            <a href="#" className="hero-scroll" onClick={e => { e.preventDefault(); scrollTo("music"); }}>
+              <span>SCROLL</span>
+              <div className="hero-scroll-line" />
+            </a>
+          </section>
+
+          {/* ── TICKER ── */}
+          <div className="ticker">
+            <div className="ticker-inner">
+              {[...Array(6)].map((_, i) => (
+                <span key={i} className="ticker-text">
+                  DISCOLAND <span className="ticker-dot">✦</span> BANGERS ALL THE TIME <span className="ticker-dot">✦</span> {T.tickerExtra}
+                </span>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ── AUDIO ENGINE ── */}
-      <audio
-        ref={audioRef}
-        onTimeUpdate={() => {
-          const a = audioRef.current;
-          if (a && a.duration) {
-            setCurrentTime(a.currentTime);
-            setProgress((a.currentTime / a.duration) * 100);
-          }
-        }}
-        onEnded={() => playTrack(activeTrack < TRACKS.length ? activeTrack + 1 : 1)}
-      />
+          {/* ── MUSIC ── */}
+          <section id="music">
+            <div className="container">
+              <div className="reveal">
+                <div className="section-label">{T.musicLabel}</div>
+                <h2 className="section-title">{T.musicTitle}</h2>
+              </div>
+              <div className="track-list reveal" style={{ marginTop:60 }}>
+                {TRACKS.map((t, i) => (
+                  <div key={t.id} className="track-item">
+                    <div className="track-num">{String(i + 1).padStart(2, "0")}</div>
+                    <div className="track-info">
+                      <div className="track-name">{t.emoji} {t.name}</div>
+                      <div className="track-meta">{t.artist}</div>
+                    </div>
+                    <div className="track-duration">{t.duration}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-logo">DISCOLAND</div>
-          <p className="footer-sub">{T.footerSub}</p>
-          <div className="footer-links">
-            {[["hero",T.footerHome],["music",T.footerMusic],["videos",T.footerVideos],["tour",T.footerTour],["gallery",T.footerGallery],["about",T.footerAbout],["contact",T.footerContact]].map(([id, label]) => (
-              <a key={id} href="#" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a>
-            ))}
-          </div>
-          <p className="footer-copy">{T.footerCopy}</p>
-        </div>
-      </footer>
+          {/* ── VIDEOS ── */}
+          <section id="videos" className="videos-section">
+            <div className="container">
+              <div className="reveal">
+                <div className="section-label">{T.videosLabel}</div>
+                <h2 className="section-title">{T.videosTitle}</h2>
+              </div>
+              <div className="video-grid">
+                {VIDEOS.map(v => (
+                  <div key={v.id} className="video-card reveal" onClick={() => setVideoModal(v)}>
+                    <div className="video-thumb" style={{ background: "#000", padding: 0 }}>
+                      <img
+                        src={`https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg`}
+                        alt={v.title}
+                        style={{ width:"100%", height:"100%", objectFit:"cover", position:"absolute", inset:0 }}
+                      />
+                      <div className="video-overlay"><div className="play-icon">▶</div></div>
+                    </div>
+                    <div className="video-info">
+                      <div className="video-title">{v.title}</div>
+                      <div className="video-sub">{v.sub}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Video modal */}
+          {videoModal && (
+            <div className="video-modal" onClick={() => setVideoModal(null)}>
+              <div className="video-modal-inner" onClick={e => e.stopPropagation()}>
+                <button className="modal-close" onClick={() => setVideoModal(null)}>✕</button>
+                <iframe
+                  width="100%" style={{ aspectRatio:"16/9", borderRadius:12, border:"none", display:"block" }}
+                  src={`https://www.youtube.com/embed/${videoModal.youtubeId}?autoplay=1`}
+                  allow="autoplay; encrypted-media" allowFullScreen
+                />
+              </div>
+            </div>
+          )}
+
+          {/* ── TOUR ── */}
+          <section id="tour">
+            <div className="container">
+              <div className="reveal">
+                <div className="section-label">{T.tourLabel}</div>
+                <h2 className="section-title">{T.tourTitle}</h2>
+              </div>
+              <div className="tour-table">
+                {TOUR_DATES.map((show, i) => (
+                  <div key={i} className="tour-row reveal">
+                    <div className="tour-date">{show.date}</div>
+                    <div><div className="tour-city">{show.city}</div></div>
+                    <div className="tour-venue">{show.venue}</div>
+                    <a
+                      href={show.private ? "#" : (show.ticketUrl || "#")}
+                      target={(!show.private && show.ticketUrl) ? "_blank" : undefined}
+                      rel="noopener noreferrer"
+                      className={`tour-btn${show.private ? " sold-out" : ""}`}
+                      onClick={e => { if (show.private || !show.ticketUrl) e.preventDefault(); }}
+                    >
+                      {show.private ? T.tourPrivate : T.tourTickets}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ── GALLERY ── */}
+          <section id="gallery" className="gallery-section">
+            <div className="container">
+              <div className="reveal">
+                <div className="section-label">{T.galleryLabel}</div>
+                <h2 className="section-title">{T.galleryTitle}</h2>
+              </div>
+              <div className="gallery-grid reveal">
+                {GALLERY_ITEMS.map((item, i) => (
+                  <div
+                    key={i}
+                    className={`gallery-item${item.feat ? " gallery-featured" : ""}`}
+                    onClick={() => setLightbox(item)}
+                  >
+                    <div className="gallery-item-inner">
+                      <img src={item.src} alt={`Discoland photo ${i + 1}`} />
+                      <div className="gallery-item-overlay">🔍</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {lightbox && (
+            <div className="lightbox" onClick={() => setLightbox(null)}>
+              <button className="lightbox-close">✕</button>
+              <img src={lightbox.src} alt="Discoland" className="lightbox-img" />
+            </div>
+          )}
+
+          {/* ── REVIEWS ── */}
+          <section className="reviews-section">
+            <div className="container">
+              <div className="reveal">
+                <div className="section-label">{T.reviewsLabel}</div>
+                <h2 className="section-title">{T.reviewsTitle}</h2>
+              </div>
+            </div>
+            <div style={{ paddingLeft: 24 }}>
+              <div className="reviews-track reveal">
+                {REVIEWS.map((r, i) => (
+                  <div key={i} className="review-card">
+                    <div className="review-stars">★★★★★</div>
+                    <p className="review-text">{r.text}</p>
+                    <div className="review-author">{r.author}</div>
+                    <div className="review-source">{r.source}</div>
+                    {r.badge && <span className="review-badge">{r.badge}</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ── ABOUT ── */}
+          <section id="about" className="about-section">
+            <div className="container">
+              <div className="reveal">
+                <div className="section-label">{T.aboutLabel}</div>
+                <h2 className="section-title">{T.aboutTitle}</h2>
+              </div>
+              <div className="about-grid">
+                <div className="about-bio reveal">
+                  <p><strong>{T.aboutBio1}</strong></p>
+                  <p>{T.aboutBio2}</p>
+                  <div className="about-highlight-box">
+                    <p style={{ fontWeight:600, color:"var(--pink)", marginBottom:8 }}>{T.aboutBoxTitle}</p>
+                    <ul>
+                      <li><strong>{T.aboutItem1T}</strong> {T.aboutItem1}</li>
+                      <li><strong>{T.aboutItem2T}</strong> {T.aboutItem2}</li>
+                      <li><strong>{T.aboutItem3T}</strong> {T.aboutItem3}</li>
+                    </ul>
+                  </div>
+                  <p style={{ marginTop:20 }}>{T.aboutBio3}</p>
+                </div>
+                <div className="reveal">
+                  <div className="glass-card" style={{ padding:32 }}>
+                    <div style={{ fontSize:64, textAlign:"center", marginBottom:24 }}>🪩</div>
+                    <h3 style={{ textAlign:"center", color:"var(--pink)", marginBottom:16, fontFamily:"Bebas Neue", fontSize:28 }}>
+                      {T.aboutCardTitle}
+                    </h3>
+                    <p style={{ textAlign:"center", color:"var(--muted)", marginBottom:24, fontSize:15 }}>
+                      {T.aboutCardSub}
+                    </p>
+                    <a
+                      href="#"
+                      className="neon-btn neon-btn-primary"
+                      style={{ width:"100%", justifyContent:"center", marginBottom:16 }}
+                      onClick={e => { e.preventDefault(); scrollTo("contact"); }}
+                    >
+                      {T.aboutCardBtn}
+                    </a>
+                    <div style={{ marginTop:24, paddingTop:24, borderTop:"1px solid var(--glass-border)" }}>
+                      <p style={{ fontSize:14, color:"var(--cyan)", textAlign:"center" }}>{T.aboutCardTag}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ── SOCIAL ── */}
+          <section className="social-section">
+            <div className="container">
+              <div className="reveal">
+                <div className="section-label">{T.socialLabel}</div>
+                <h2 className="section-title" style={{ fontSize:"clamp(40px,6vw,80px)" }}>{T.socialTitle}</h2>
+                <p style={{ color:"var(--muted)", marginTop:16, fontSize:16 }}>{T.socialSub}</p>
+              </div>
+              <div className="social-icons reveal">
+                <a href="https://instagram.com/discoland.music" target="_blank" rel="noopener noreferrer" className="social-icon-btn instagram">
+                  <span className="social-icon-svg">📸</span><span>Instagram</span>
+                </a>
+                <a href="#" className="social-icon-btn youtube" target="_blank" rel="noopener noreferrer">
+                  <span className="social-icon-svg">▶</span><span>YouTube</span>
+                </a>
+                <a href="#" className="social-icon-btn tiktok" target="_blank" rel="noopener noreferrer">
+                  <span className="social-icon-svg">🎵</span><span>TikTok</span>
+                </a>
+              </div>
+
+              <div className="newsletter reveal">
+                <h3>{T.newsletterTitle}</h3>
+                <p>{T.newsletterSub}</p>
+                <div className="newsletter-form">
+                  <input
+                    type="email" className="newsletter-input" placeholder={T.newsletterPh}
+                    value={newsletter} onChange={e => setNewsletter(e.target.value)}
+                  />
+                  <button
+                    className="neon-btn neon-btn-primary"
+                    onClick={() => { if (newsletter) { alert("You're on the list! 🪩"); setNewsletter(""); } }}
+                  >
+                    {T.newsletterBtn}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ── CONTACT ── */}
+          <section id="contact">
+            <div className="container">
+              <div className="reveal">
+                <div className="section-label">{T.contactLabel}</div>
+                <h2 className="section-title">{T.contactTitle}</h2>
+              </div>
+              <div className="contact-grid">
+                <div className="contact-info reveal">
+                  <div className="contact-info-item">
+                    <div className="contact-info-label">{T.contactBookingsLabel}</div>
+                    <div className="contact-info-value">booking@discoland.nl</div>
+                  </div>
+                  <div className="contact-info-item">
+                    <div className="contact-info-label">{T.contactIgLabel}</div>
+                    <div className="contact-info-value">@discoland.music</div>
+                  </div>
+                  <div className="contact-info-item">
+                    <div className="contact-info-label">{T.contactBasedLabel}</div>
+                    <div className="contact-info-value">{T.contactBasedValue}</div>
+                  </div>
+                  <p style={{ color:"var(--muted)", fontSize:14, lineHeight:1.7 }}>{T.contactInfo}</p>
+                </div>
+                <div className="reveal">
+                  {formSent
+                    ? <div className="form-success">{T.contactSuccess}</div>
+                    : <form className="contact-form" onSubmit={e => { e.preventDefault(); setFormSent(true); }}>
+                        <input className="form-input" placeholder={T.contactNamePh} value={contactForm.name}
+                          onChange={e => setContactForm(f => ({ ...f, name: e.target.value }))} required />
+                        <input type="email" className="form-input" placeholder={T.contactEmailPh} value={contactForm.email}
+                          onChange={e => setContactForm(f => ({ ...f, email: e.target.value }))} required />
+                        <textarea className="form-textarea" placeholder={T.contactMsgPh}
+                          value={contactForm.message}
+                          onChange={e => setContactForm(f => ({ ...f, message: e.target.value }))} required />
+                        <button type="submit" className="neon-btn neon-btn-primary" style={{ alignSelf:"flex-start" }}>
+                          {T.contactSendBtn}
+                        </button>
+                      </form>
+                  }
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ── FOOTER ── */}
+          <footer className="footer">
+            <div className="container">
+              <div className="footer-logo">DISCOLAND</div>
+              <p className="footer-sub">{T.footerSub}</p>
+              <div className="footer-links">
+                {[["hero",T.footerHome],["music",T.footerMusic],["videos",T.footerVideos],["tour",T.footerTour],["gallery",T.footerGallery],["about",T.footerAbout],["contact",T.footerContact]].map(([id, label]) => (
+                  <a key={id} onClick={() => scrollTo(id)}>{label}</a>
+                ))}
+                <a onClick={goToMembers}>{T.footerMembers}</a>
+              </div>
+              <p className="footer-copy">{T.footerCopy}</p>
+            </div>
+          </footer>
+
+        </>
+      )}
 
     </div>
   );
