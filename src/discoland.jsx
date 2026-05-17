@@ -10,6 +10,12 @@ import DLPhoto7  from './assets/DLPhoto7.jpeg';
 import DLPhoto8  from './assets/DLPhoto8.jpeg';
 import DLPhoto9  from './assets/DLPhoto9.jpeg';
 import DLPhoto10 from './assets/DLPhoto10.jpeg';
+import IreenPhoto  from './assets/Ireen.jpg';
+import RachelPhoto from './assets/Rachel.jpg';
+import RuudPhoto   from './assets/Ruud.jpg';
+import EmrePhoto   from './assets/Emre.jfif';
+import TanselPhoto from './assets/Tansel.jfif';
+import LukasPhoto  from './assets/Lukas.jfif';
 
 // ── Fonts ──────────────────────────────────────────────────────────────────
 const fontLink = document.createElement("link");
@@ -671,12 +677,12 @@ const REVIEWS = [
 ];
 
 const MEMBERS = [
-  { id: 1, role: "Vocals",    name: "Ireen",  bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
-  { id: 2, role: "Vocals",    name: "Rachel", bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
-  { id: 3, role: "Guitar",    name: "Emre",   bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
-  { id: 4, role: "Bass",      name: "Ruud",   bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
-  { id: 5, role: "Keyboards", name: "Lukas",  bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
-  { id: 6, role: "Drums",     name: "Tansel", bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: null },
+  { id: 1, role: "Vocals",    name: "Ireen",  bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: IreenPhoto  },
+  { id: 2, role: "Vocals",    name: "Rachel", bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: RachelPhoto },
+  { id: 3, role: "Guitar",    name: "Emre",   bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: EmrePhoto   },
+  { id: 4, role: "Bass",      name: "Ruud",   bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: RuudPhoto   },
+  { id: 5, role: "Keyboards", name: "Lukas",  bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: LukasPhoto  },
+  { id: 6, role: "Drums",     name: "Tansel", bio: "Add a short bio here — background, musical journey, favourite disco artists, and what makes performing with Discoland so special.", photo: TanselPhoto },
 ];
 
 // ── Scroll reveal hook ────────────────────────────────────────────────────────
